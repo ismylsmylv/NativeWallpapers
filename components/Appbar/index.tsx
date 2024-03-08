@@ -45,10 +45,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 55,
     paddingVertical: 20,
     width: '100%',
-    // bottom: ,
-    // flex: 1,
-    zIndex: 100,
+    bottom: 0,
     // position: 'absolute',
+    backgroundColor: 'white',
+    alignSelf: 'flex-end',
   },
   icon: {
     height: 30,

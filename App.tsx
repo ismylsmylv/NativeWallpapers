@@ -10,6 +10,7 @@ import {SafeAreaView, ScrollView, StatusBar, StyleSheet} from 'react-native';
 import Appbar from './components/Appbar';
 import Header from './components/Header';
 import Filters from './components/Filters';
+import Cards from './components/Cards';
 
 function App(): React.JSX.Element {
   return (
@@ -17,12 +18,23 @@ function App(): React.JSX.Element {
       <StatusBar />
       <Header />
       <Filters />
-      <ScrollView></ScrollView>
+      <Cards style={styles.imageGrid} />
       <Appbar />
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  imageGrid: {
+    marginTop: 20,
+    marginBottom: 150,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 20,
+  },
+});
 
 export default App;

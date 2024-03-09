@@ -11,16 +11,20 @@ import Appbar from './components/Appbar';
 import Header from './components/Header';
 import Filters from './components/Filters';
 import Cards from './components/Cards';
+import store from './redux/store';
+import {Provider} from 'react-redux';
 
 function App(): React.JSX.Element {
   return (
-    <SafeAreaView style={styles.main}>
-      <StatusBar backgroundColor={'white'} />
-      <Header />
-      <Filters />
-      <Cards style={styles.imageGrid} />
-      <Appbar />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.main}>
+        <StatusBar backgroundColor={'transparent'} hidden={true} />
+        <Header />
+        <Filters />
+        <Cards style={styles.imageGrid} />
+        <Appbar />
+      </SafeAreaView>
+    </Provider>
   );
 }
 

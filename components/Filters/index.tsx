@@ -1,12 +1,18 @@
 /* eslint-disable prettier/prettier */
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
+import {increment} from '../../redux/slice';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function Filters() {
+  // const count = useAppSelector(state => state.counter.value);
+  // let count;
+  const count = useSelector(state => state.count);
+  const dispatch = useDispatch();
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <Text style={styles.category}>for you</Text>
+      <TouchableOpacity onPress={() => dispatch({type: 'INCREMENT'})}>
+        <Text style={styles.category}>for you {count}</Text>
         {/* all */}
       </TouchableOpacity>
       <TouchableOpacity>

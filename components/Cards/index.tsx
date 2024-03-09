@@ -49,6 +49,7 @@ const ImageItem = ({title}) => (
 export default function Cards({style}) {
   return (
     <FlatList
+      contentContainerStyle={styles.flatContainer}
       data={DATA}
       numColumns={2}
       renderItem={({item}) => <ImageItem title={item.title} />}
@@ -76,7 +77,11 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   flatContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
+    // gap: 10,
+    alignItems: 'center',
+    flexGrow: 0,
   },
+  contentContainer: {},
 });

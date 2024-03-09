@@ -14,8 +14,8 @@ import Cards from './components/Cards';
 
 function App(): React.JSX.Element {
   return (
-    <SafeAreaView>
-      <StatusBar />
+    <SafeAreaView style={styles.main}>
+      <StatusBar backgroundColor={'white'} />
       <Header />
       <Filters />
       <Cards style={styles.imageGrid} />
@@ -34,6 +34,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: 20,
+  },
+  main: {
+    backgroundColor: 'white',
+    overflow: 'scroll',
   },
 });
 

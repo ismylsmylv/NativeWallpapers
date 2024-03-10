@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {FlatList, ImageBackground, StyleSheet} from 'react-native';
+import {Text} from 'react-native-svg';
 const image = require('../../assets/img/wallpapersden.com_new-york-minimal-digital-art_1920x1080.jpg');
 const DATA = [
   {
@@ -33,19 +34,22 @@ const DATA = [
   },
 ];
 
-const ImageItem = ({title}) => (
-  <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-    {/* <Text style={{color: 'white'}}>{title}</Text> */}
+const ImageItem = ({title, img, item}) => (
+  <ImageBackground source={item.img} resizeMode="cover" style={styles.image}>
+    <Text>{item.title} example</Text>
   </ImageBackground>
 );
-export default function Cards({style}) {
+export default function Cards({style, datas}) {
+  console.log(datas);
   return (
     <FlatList
       contentContainerStyle={styles.flatContainer}
-      data={DATA}
+      data={datas}
       numColumns={2}
-      renderItem={({item}) => <ImageItem title={item.title} />}
-      keyExtractor={item => item.id}
+      renderItem={({item}) => (
+        <ImageItem title={item.name} img={item.img} item={item} />
+      )}
+      keyExtractor={item => item.id.toString()}
     />
   );
 }
@@ -57,6 +61,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: 'hidden',
     margin: 10,
+    backgroundColor: 'red',
   },
   imageGrid: {
     marginTop: 20,

@@ -8,7 +8,7 @@ import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import CategoryScreen from '../../pages/Categories';
 import HomeScreen from '../../pages/Home';
-import WhislistScreen from '../../pages/Whislist';
+import WishlistScreen from '../../pages/Whislist';
 
 export default function Appbar() {
   const Tab = createBottomTabNavigator(); // <View style={styles.container}>
@@ -65,11 +65,11 @@ export default function Appbar() {
       <Tab.Screen
         listeners={{
           tabPress: () => {
-            setRoute('WhislistScreen');
+            setRoute('WishlistScreen');
           },
         }}
-        name="WhislistScreen"
-        component={WhislistScreen}
+        name="WishlistScreen"
+        component={WishlistScreen}
         options={{
           tabBarLabel: '',
 
@@ -79,7 +79,7 @@ export default function Appbar() {
               style={styles.icon}
               size={25}
               color={
-                route === 'WhislistScreen' ? '#FF304F' : '#rgb(195,200,215)'
+                route === 'WishlistScreen' ? '#FF304F' : '#rgb(195,200,215)'
               }
             />
           ),

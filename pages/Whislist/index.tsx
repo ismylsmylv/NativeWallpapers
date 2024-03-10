@@ -1,21 +1,40 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import Cards from '../../components/Cards';
+import Filters from '../../components/Filters';
+import {Text} from 'react-native-svg';
 
-export default function WhislistScreen() {
+export default function WishlistScreen() {
   useEffect(() => {
-    console.log('wishlist mounted');
+    console.log('home mounted');
   }, []);
   return (
     <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 900,
-        backgroundColor: 'red',
-      }}>
-      <Text>wishlist Screen</Text>
+      style={[
+        {flex: 1, alignItems: 'center', justifyContent: 'center'},
+        styles.main,
+      ]}>
+      <Text>Wishlist</Text>
+      <Cards style={styles.imageGrid} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  imageGrid: {
+    marginTop: 20,
+    marginBottom: 150,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 20,
+    flex: 1,
+  },
+  main: {
+    backgroundColor: 'white',
+    overflow: 'scroll',
+  },
+});

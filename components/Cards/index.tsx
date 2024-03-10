@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, ImageBackground, StyleSheet} from 'react-native';
 import {Text} from 'react-native-svg';
 const image = require('../../assets/img/wallpapersden.com_new-york-minimal-digital-art_1920x1080.jpg');
@@ -34,25 +34,50 @@ const DATA = [
   },
 ];
 
-const ImageItem = ({title, img, item}) => (
-  <ImageBackground source={item.img} resizeMode="cover" style={styles.image}>
-    <Text>{item.title} example</Text>
-  </ImageBackground>
-);
+const ImageItem = ({title, img, item}) => {
+  console.log(item, 'as item image');
+
+  const image = {uri: img};
+  return (
+    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <Text>{item.title} example</Text>
+    </ImageBackground>
+  );
+};
 export default function Cards({style, datas}) {
+  useEffect(() => {
+    console.log(datas, 'from cards');
+  }, []);
+
   console.log(datas);
   return (
     <FlatList
       contentContainerStyle={styles.flatContainer}
       data={datas}
       numColumns={2}
-      renderItem={({item}) => (
-        <ImageItem title={item.name} img={item.img} item={item} />
-      )}
+      renderItem={({item}) => {
+        console.log(item, 'as item');
+        // return
+        return <ImageItem title={item.name} img={item.img} item={item} />;
+      }}
       keyExtractor={item => item.id.toString()}
     />
   );
 }
+// renderItem = ({item}) => {
+//   const {items} = this.state;
+//   if (items.empty === true) {
+//     return <View style={[styles.item, styles.itemInvisible]} />;
+//   }
+//   return (
+//     <TouchableOpacity
+//       style={styles.item}
+//       onPress={this.deletePhoto}
+//       key={item.id}>
+//       <Image source={{uri: item.value}} style={{width: 400, height: 120}} />
+//     </TouchableOpacity>
+//   );
+// };
 const styles = StyleSheet.create({
   image: {
     height: 210,
@@ -61,7 +86,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     overflow: 'hidden',
     margin: 10,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
   imageGrid: {
     marginTop: 20,

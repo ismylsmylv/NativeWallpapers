@@ -1,29 +1,28 @@
 /* eslint-disable prettier/prettier */
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Cards from '../../components/Cards';
 import Filters from '../../components/Filters';
+import {useAppDispatch, useAppSelector} from '../../redux/hooks';
+import {fetchWalls} from '../../redux/slice';
 
 export default function HomeScreen() {
   const [datas, setdatas] = useState([]);
   const [loaded, setloaded] = useState(false);
+
   useEffect(() => {
     console.log('home mounted');
-    axios
-      .get('https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers')
-      .then(res => {
-        setdatas(res.data);
-        console.log(datas, 'from useffect');
-        setloaded(true);
-      });
-    // fetch('https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers')
-    //   .then(resp => resp.json())
-    //   .then(json => setdatas(json))
-    //   .catch(error => console.error(error))
-    //   .finally(() => setloaded(false));
+    // axios
+    //   .get('https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers')
+    //   .then(res => {
+    //     setdatas(res.data);
+    //     console.log(datas, 'from useffect');
+    //     setloaded(true);
+    //   });
+    dispatch(fetchWalls());
   }, []);
-
+  const wallpapers = useAppSelector(state => state.counter.wallpapers);
+  const dispatch = useAppDispatch();
   return (
     // datas.length > 0 && (
 
@@ -46,7 +45,7 @@ export default function HomeScreen() {
             });
         }}
       /> */}
-      <Cards style={styles.imageGrid} datas={datas} />
+      <Cards style={styles.imageGrid} datas={wallpapers} />
     </View>
   );
   // );

@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import Cards from '../../components/Cards';
-import Filters from '../../components/Filters';
 import {Text} from 'react-native-svg';
+import Cards from '../../components/Cards';
 
 export default function WishlistScreen() {
   useEffect(() => {

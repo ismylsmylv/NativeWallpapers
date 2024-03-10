@@ -1,13 +1,12 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  ImageBackground,
+  Image,
   SafeAreaView,
   ScrollView,
-  Image,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 
 const categories = [

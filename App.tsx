@@ -30,7 +30,9 @@ function App(): React.JSX.Element {
         <StatusBar backgroundColor={'transparent'} hidden={true} />
         <Header />
         {/* <View style={styles.container}> */}
-        <Appbar />
+        <NavigationContainer>
+          <Appbar />
+        </NavigationContainer>
         {/* </View> */}
       </SafeAreaView>
     </Provider>

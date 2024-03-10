@@ -1,69 +1,67 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable prettier/prettier */
 import {faBorderAll, faHeart, faHouse} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import 'react-native-gesture-handler';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
 import CategoryScreen from '../../pages/Categories';
-import WhislistScreen from '../../pages/Whislist';
 import HomeScreen from '../../pages/Home';
+import WhislistScreen from '../../pages/Whislist';
+
 export default function Appbar() {
-  const Tab = createBottomTabNavigator();
+  const Tab = createBottomTabNavigator(); // <View style={styles.container}>
+
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              tabBarLabel: 'Home',
-              tabBarIcon: () => (
-                <FontAwesomeIcon
-                  icon={faHouse}
-                  style={styles.icon}
-                  size={25}
-                  color="#rgb(195,200,215)"
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Category"
-            component={CategoryScreen}
-            options={{
-              tabBarLabel: 'Category',
-              tabBarIcon: () => (
-                <FontAwesomeIcon
-                  icon={faBorderAll}
-                  style={styles.icon}
-                  size={25}
-                  color="#rgb(195,200,215)"
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Whislist"
-            component={WhislistScreen}
-            options={{
-              tabBarLabel: 'Whislist',
-              tabBarIcon: () => (
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  style={styles.icon}
-                  size={25}
-                  color="#rgb(195,200,215)"
-                />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'HomeScreen',
+          tabBarIcon: () => (
+            <FontAwesomeIcon
+              icon={faHouse}
+              style={styles.icon}
+              size={25}
+              color="#rgb(195,200,215)"
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="CategoryScreen"
+        component={CategoryScreen}
+        options={{
+          tabBarLabel: 'CategoryScreen',
+          tabBarIcon: () => (
+            <FontAwesomeIcon
+              icon={faBorderAll}
+              style={styles.icon}
+              size={25}
+              color="#rgb(195,200,215)"
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="WhislistScreen"
+        component={WhislistScreen}
+        options={{
+          tabBarLabel: 'WhislistScreen',
+          tabBarIcon: () => (
+            <FontAwesomeIcon
+              icon={faHeart}
+              style={styles.icon}
+              size={25}
+              color="#rgb(195,200,215)"
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
@@ -85,34 +83,3 @@ const styles = StyleSheet.create({
     width: 30,
   },
 });
-
-// <View style={styles.container}>
-// <TouchableOpacity
-//   onPress={() => {
-//     alert('test');
-//     navigation.navigate('About');
-//   }}>
-//   <FontAwesomeIcon
-//     icon={faHouse}
-//     style={styles.icon}
-//     size={25}
-//     color="#rgb(195,200,215)"
-//   />
-// </TouchableOpacity>
-// <TouchableOpacity>
-//   <FontAwesomeIcon
-//     icon={faBorderAll}
-//     style={styles.icon}
-//     size={25}
-//     color="#rgb(195,200,215)"
-//   />
-// </TouchableOpacity>
-// <TouchableOpacity>
-//   <FontAwesomeIcon
-//     icon={faHeart}
-//     style={styles.icon}
-//     size={25}
-//     color="#rgb(195,200,215)"
-//   />
-// </TouchableOpacity>
-// </View>

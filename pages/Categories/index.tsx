@@ -1,11 +1,24 @@
 /* eslint-disable prettier/prettier */
-import React, {Component} from 'react';
-import {Button, View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
 
-export default function CategoryScreen() {
+function CategoryScreen() {
+  useEffect(() => {
+    console.log('category mounted');
+  }, []);
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Category Screen</Text>
+    <View style={styles.container}>
+      <Text>Profile</Text>
     </View>
   );
 }
+
+export default CategoryScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#818CF8',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

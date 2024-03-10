@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {Button, View, Text, StyleSheet} from 'react-native';
 import Filters from '../../components/Filters';
 import Cards from '../../components/Cards';
 
 export default function HomeScreen() {
+  useEffect(() => {
+    console.log('home mounted');
+  }, []);
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Filters />

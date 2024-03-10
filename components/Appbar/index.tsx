@@ -5,20 +5,23 @@ import {faBorderAll, faHeart, faHouse} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import CategoryScreen from '../../pages/Categories';
 import HomeScreen from '../../pages/Home';
 import WhislistScreen from '../../pages/Whislist';
-import {Text} from 'react-native-svg';
 
 export default function Appbar() {
   const Tab = createBottomTabNavigator(); // <View style={styles.container}>
   const [route, setRoute] = useState('HomeScreen');
   return (
-    <Tab.Navigator {...{screenOptions}}>
+    <Tab.Navigator
+      {...{screenOptions}}
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Tab.Screen
         listeners={{
-          tabPress: e => {
+          tabPress: () => {
             setRoute('HomeScreen');
           },
         }}
@@ -31,14 +34,14 @@ export default function Appbar() {
               icon={faHouse}
               style={styles.icon}
               size={25}
-              color={route == 'HomeScreen' ? '#FF304F' : '#rgb(195,200,215)'}
+              color={route === 'HomeScreen' ? '#FF304F' : '#rgb(195,200,215)'}
             />
           ),
         }}
       />
       <Tab.Screen
         listeners={{
-          tabPress: e => {
+          tabPress: () => {
             setRoute('CategoryScreen');
           },
         }}
@@ -52,7 +55,7 @@ export default function Appbar() {
               style={styles.icon}
               size={25}
               color={
-                route == 'CategoryScreen' ? '#FF304F' : '#rgb(195,200,215)'
+                route === 'CategoryScreen' ? '#FF304F' : '#rgb(195,200,215)'
               }
             />
           ),
@@ -61,7 +64,7 @@ export default function Appbar() {
 
       <Tab.Screen
         listeners={{
-          tabPress: e => {
+          tabPress: () => {
             setRoute('WhislistScreen');
           },
         }}
@@ -69,13 +72,14 @@ export default function Appbar() {
         component={WhislistScreen}
         options={{
           tabBarLabel: '',
+
           tabBarIcon: () => (
             <FontAwesomeIcon
               icon={faHeart}
               style={styles.icon}
               size={25}
               color={
-                route == 'WhislistScreen' ? '#FF304F' : '#rgb(195,200,215)'
+                route === 'WhislistScreen' ? '#FF304F' : '#rgb(195,200,215)'
               }
             />
           ),
@@ -101,14 +105,15 @@ const styles = StyleSheet.create({
   icon: {
     height: 30,
     width: 30,
+    margin: 10,
   },
 });
 
 const screenOptions = {
   tabBarStyle: {
-    height: 70,
+    height: 90,
+    margin: 30,
   },
-
   tabBarOptions: {
     activeTintColor: '#ffffff',
   },

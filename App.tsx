@@ -5,25 +5,17 @@
  * @format
  */
 /* eslint-disable prettier/prettier */
-import {faBorderAll, faHeart, faHouse} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, View} from 'react-native';
+import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 
 import Appbar from './components/Appbar';
 import Header from './components/Header';
 import store from './redux/store';
-import HomeScreen from './pages/Home';
-import CategoryScreen from './pages/Categories';
-import WhislistScreen from './pages/Whislist';
 
 function App(): React.JSX.Element {
-  const Tab = createBottomTabNavigator();
-
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.main}>

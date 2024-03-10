@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, {Component, useEffect} from 'react';
-import {Button, View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {Text, View} from 'react-native';
 
 export default function WhislistScreen() {
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function WhislistScreen() {
         zIndex: 900,
         backgroundColor: 'red',
       }}>
-      <Text>Contact Screen</Text>
+      <Text>wishlist Screen</Text>
     </View>
   );
 }

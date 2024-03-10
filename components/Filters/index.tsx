@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
-import {increment} from '../../redux/slice';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 export default function Filters() {
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '700',
     color: '#C7C7CE',
+    width: '100%',
   },
   container: {
     display: 'flex',
@@ -38,5 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 25,
     paddingVertical: 20,
+    gap: 20,
+    width: '100%',
   },
 });

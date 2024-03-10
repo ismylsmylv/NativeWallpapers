@@ -1,15 +1,19 @@
 /* eslint-disable prettier/prettier */
-import React, {Component, useEffect} from 'react';
-import {Button, View, Text, StyleSheet} from 'react-native';
-import Filters from '../../components/Filters';
+import React, {useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import Cards from '../../components/Cards';
+import Filters from '../../components/Filters';
 
 export default function HomeScreen() {
   useEffect(() => {
     console.log('home mounted');
   }, []);
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={[
+        {flex: 1, alignItems: 'center', justifyContent: 'center'},
+        styles.main,
+      ]}>
       <Filters />
       <Cards style={styles.imageGrid} />
     </View>

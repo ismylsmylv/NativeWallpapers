@@ -1,14 +1,6 @@
 /* eslint-disable prettier/prettier */
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-} from 'react-native';
 import React from 'react';
+import {FlatList, ImageBackground, StyleSheet} from 'react-native';
 const image = require('../../assets/img/wallpapersden.com_new-york-minimal-digital-art_1920x1080.jpg');
 const DATA = [
   {
@@ -43,7 +35,7 @@ const DATA = [
 
 const ImageItem = ({title}) => (
   <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-    <Text style={{color: 'white'}}>{title}</Text>
+    {/* <Text style={{color: 'white'}}>{title}</Text> */}
   </ImageBackground>
 );
 export default function Cards({style}) {

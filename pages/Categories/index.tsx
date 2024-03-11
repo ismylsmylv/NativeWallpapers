@@ -8,7 +8,8 @@ import {
   Text,
   View,
 } from 'react-native';
-
+import {useNavigation} from '@react-navigation/native';
+import Appbar from '../../components/Appbar';
 const categories = [
   {
     title: 'Nature',
@@ -60,6 +61,7 @@ function CategoryScreen() {
   useEffect(() => {
     console.log('category mounted');
   }, []);
+  const navigation = useNavigation();
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
@@ -85,6 +87,7 @@ function CategoryScreen() {
           );
         })}
       </ScrollView>
+      <Appbar navigation={navigation} />
     </SafeAreaView>
   );
 }

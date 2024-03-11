@@ -8,6 +8,7 @@ import {fetchWalls} from '../../redux/slice';
 import Detail from '../Detail';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Appbar from '../../components/Appbar';
 
 export default function HomeScreen() {
   const [datas, setdatas] = useState([]);
@@ -38,36 +39,12 @@ export default function HomeScreen() {
         styles.main,
       ]}>
       <Filters />
-
-      {/* <Button
-        title="get"
-        onPress={() => {
-          axios
-            .get('https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers')
-            .then(res => {
-              setdatas(res.data);
-              console.log(datas, 'from button');
-              setloaded(true);
-            });
-        }}
-      /> */}
-      {/* <Stack.Navigator>
-        <Stack.Screen
-          name="Cards"
-          component={Cards}
-          options={{title: 'Welcome'}}
-        />
-        <Stack.Screen name="Detail" component={Detail} />
-      </Stack.Navigator> */}
-      {/* <Stack.Navigator>
-        <Stack.Screen name="Cards" component={Cards} />
-        <Stack.Screen name="Detail" component={Detail} />
-      </Stack.Navigator> */}
       <Cards
         style={styles.imageGrid}
         datas={wallpapers}
         navigation={navigation}
       />
+      <Appbar navigation={navigation} />
     </View>
   );
   // );

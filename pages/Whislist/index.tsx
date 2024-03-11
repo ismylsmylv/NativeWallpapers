@@ -3,11 +3,14 @@ import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
 import Cards from '../../components/Cards';
+import Appbar from '../../components/Appbar';
+import {useNavigation} from '@react-navigation/native';
 
 export default function WishlistScreen() {
   useEffect(() => {
     console.log('home mounted');
   }, []);
+  const navigation = useNavigation();
   return (
     <View
       style={[
@@ -16,6 +19,7 @@ export default function WishlistScreen() {
       ]}>
       <Text>Wishlist</Text>
       <Cards style={styles.imageGrid} />
+      <Appbar navigation={navigation} />
     </View>
   );
 }

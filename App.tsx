@@ -18,10 +18,10 @@ import Cards from './components/Cards';
 import Detail from './pages/Detail';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Appnavigator from './components/app.navigator';
-
+import {useNavigation} from '@react-navigation/native';
 function App(): React.JSX.Element {
   const Stack = createNativeStackNavigator();
-
+  // const navigation = useNavigation();
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.main}>
@@ -29,9 +29,9 @@ function App(): React.JSX.Element {
         <Header />
         <Appnavigator />
         {/* <View style={styles.container}> */}
-        <NavigationContainer>
-          <Appbar />
-        </NavigationContainer>
+        {/* <NavigationContainer>
+          <Appbar navigation={navigation} />
+        </NavigationContainer> */}
         {/* </View> */}
       </SafeAreaView>
     </Provider>

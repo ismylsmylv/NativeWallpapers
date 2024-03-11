@@ -7,12 +7,14 @@ import axios from 'axios';
 interface CounterState {
   value: number;
   wallpapers: object[];
+  route: string;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
   value: 0,
   wallpapers: [],
+  route: 'HomeScreen',
 };
 export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
   const response = await axios.get(
@@ -32,8 +34,8 @@ export const counterSlice = createSlice({
       state.value -= 1;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
+    setRoute: (state, action: PayloadAction<string>) => {
+      state.route = action.payload;
     },
   },
   extraReducers: builder => {
@@ -45,7 +47,7 @@ export const counterSlice = createSlice({
   },
 });
 
-export const {increment, decrement, incrementByAmount} = counterSlice.actions;
+export const {increment, decrement, setRoute} = counterSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value;
 

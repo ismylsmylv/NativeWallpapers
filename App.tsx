@@ -14,8 +14,13 @@ import {Provider} from 'react-redux';
 import Appbar from './components/Appbar';
 import Header from './components/Header';
 import store from './redux/store';
+import Cards from './components/Cards';
+import Detail from './pages/Detail';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 function App(): React.JSX.Element {
+  const Stack = createNativeStackNavigator();
+
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.main}>

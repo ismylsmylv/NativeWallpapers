@@ -5,7 +5,9 @@ import Cards from '../../components/Cards';
 import Filters from '../../components/Filters';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {fetchWalls} from '../../redux/slice';
-
+import Detail from '../Detail';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 export default function HomeScreen() {
   const [datas, setdatas] = useState([]);
   const [loaded, setloaded] = useState(false);
@@ -23,9 +25,10 @@ export default function HomeScreen() {
   }, []);
   const wallpapers = useAppSelector(state => state.counter.wallpapers);
   const dispatch = useAppDispatch();
+  const Stack = createNativeStackNavigator();
+  const navigation = createNativeStackNavigator();
   return (
     // datas.length > 0 && (
-
     <View
       style={[
         {flex: 1, alignItems: 'center', justifyContent: 'center'},
@@ -45,7 +48,23 @@ export default function HomeScreen() {
             });
         }}
       /> */}
-      <Cards style={styles.imageGrid} datas={wallpapers} />
+      {/* <Stack.Navigator>
+        <Stack.Screen
+          name="Cards"
+          component={Cards}
+          options={{title: 'Welcome'}}
+        />
+        <Stack.Screen name="Detail" component={Detail} />
+      </Stack.Navigator> */}
+      <Stack.Navigator>
+        <Stack.Screen name="Cards" component={Cards} />
+        <Stack.Screen name="Detail" component={Detail} />
+      </Stack.Navigator>
+      <Cards
+        style={styles.imageGrid}
+        datas={wallpapers}
+        navigation={navigation}
+      />
     </View>
   );
   // );

@@ -1,9 +1,18 @@
 /* eslint-disable prettier/prettier */
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect} from 'react';
-import {FlatList, ImageBackground, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-svg';
 
-const ImageItem = ({title, img, item}) => {
+const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
 
   const image = {uri: img};
@@ -13,7 +22,8 @@ const ImageItem = ({title, img, item}) => {
     </ImageBackground>
   );
 };
-export default function Cards({style, datas}) {
+export default function Cards({datas, navigation}: any) {
+  const Stack = createNativeStackNavigator();
   useEffect(() => {
     console.log(datas, 'from cards');
   }, []);
@@ -25,9 +35,15 @@ export default function Cards({style, datas}) {
       data={datas}
       numColumns={2}
       renderItem={({item}) => {
-        console.log(item, 'as item');
-        // return
-        return <ImageItem title={item.name} img={item.img} item={item} />;
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              console.log(item.name + ' pressed');
+              navigation.navigate('Detail', {item});
+            }}>
+            <ImageItem title={item.name} img={item.img} item={item} />
+          </TouchableOpacity>
+        );
       }}
       keyExtractor={item => item.id.toString()}
     />

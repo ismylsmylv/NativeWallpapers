@@ -13,11 +13,27 @@ const Appnavigator = () => {
   // Make sure to return JSX
   return (
     <NavigationContainer>
-      <Navigator initialRouteName="home" options={{headerShown: true}}>
-        <Screen name="home" component={HomeScreen} />
-        <Screen name="detail" component={Detail} />
-        <Screen name="categories" component={CategoryScreen} />
-        <Screen name="wishlist" component={WishlistScreen} />
+      <Navigator initialRouteName="home">
+        <Screen
+          name="home"
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
+        <Screen
+          name="detail"
+          component={Detail}
+          options={{headerShown: false}}
+        />
+        <Screen
+          name="categories"
+          component={CategoryScreen}
+          options={{headerShown: false}}
+        />
+        <Screen
+          name="wishlist"
+          component={WishlistScreen}
+          options={{headerShown: false}}
+        />
       </Navigator>
     </NavigationContainer>
   );

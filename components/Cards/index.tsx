@@ -1,16 +1,14 @@
 /* eslint-disable prettier/prettier */
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect} from 'react';
 import {
   FlatList,
   ImageBackground,
-  SafeAreaView,
   StyleSheet,
-  View,
+  TouchableOpacity,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-svg';
+import {useDispatch} from 'react-redux';
+import {setDetailOpen, setItem} from '../../redux/slice';
 
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
@@ -22,8 +20,8 @@ const ImageItem = ({img, item}: any) => {
     </ImageBackground>
   );
 };
-export default function Cards({datas, navigation, props}: any) {
-  const Stack = createNativeStackNavigator();
+export default function Cards({datas, navigation}: any) {
+  const dispatch = useDispatch();
   useEffect(() => {
     console.log(datas, 'from cards');
   }, []);
@@ -39,6 +37,8 @@ export default function Cards({datas, navigation, props}: any) {
           <TouchableOpacity
             onPress={() => {
               console.log(item.name + ' pressed');
+              dispatch(setItem(item));
+              dispatch(setDetailOpen(true));
               navigation.navigate('detail');
             }}>
             <ImageItem title={item.name} img={item.img} item={item} />

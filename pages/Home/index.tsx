@@ -1,18 +1,16 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
+import Appbar from '../../components/Appbar';
 import Cards from '../../components/Cards';
 import Filters from '../../components/Filters';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {fetchWalls} from '../../redux/slice';
-import Detail from '../Detail';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Appbar from '../../components/Appbar';
 
 export default function HomeScreen() {
-  const [datas, setdatas] = useState([]);
-  const [loaded, setloaded] = useState(false);
+  // const [datas, setdatas] = useState([]);
+  // const [loaded, setloaded] = useState(false);
 
   useEffect(() => {
     console.log('home mounted');
@@ -24,10 +22,10 @@ export default function HomeScreen() {
     //     setloaded(true);
     //   });
     dispatch(fetchWalls());
+    // dispatch(setDetailOpen(false));
   }, []);
   const wallpapers = useAppSelector(state => state.counter.wallpapers);
   const dispatch = useAppDispatch();
-  const Stack = createNativeStackNavigator();
   // const navigation = createNativeStackNavigator();
   const navigation = useNavigation();
 

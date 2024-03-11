@@ -5,23 +5,17 @@
  * @format
  */
 /* eslint-disable prettier/prettier */
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import 'react-native-gesture-handler';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 
-import Appbar from './components/Appbar';
 import Header from './components/Header';
-import store from './redux/store';
-import Cards from './components/Cards';
-import Detail from './pages/Detail';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Appnavigator from './components/app.navigator';
-import {useNavigation} from '@react-navigation/native';
+import store from './redux/store';
 function App(): React.JSX.Element {
-  const Stack = createNativeStackNavigator();
   // const navigation = useNavigation();
+
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.main}>

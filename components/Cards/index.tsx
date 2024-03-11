@@ -22,7 +22,7 @@ const ImageItem = ({img, item}: any) => {
     </ImageBackground>
   );
 };
-export default function Cards({datas, navigation}: any) {
+export default function Cards({datas, navigation, props}: any) {
   const Stack = createNativeStackNavigator();
   useEffect(() => {
     console.log(datas, 'from cards');
@@ -39,7 +39,7 @@ export default function Cards({datas, navigation}: any) {
           <TouchableOpacity
             onPress={() => {
               console.log(item.name + ' pressed');
-              navigation.navigate('Detail', {item});
+              navigation.navigate('detail');
             }}>
             <ImageItem title={item.name} img={item.img} item={item} />
           </TouchableOpacity>

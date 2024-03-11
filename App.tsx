@@ -17,6 +17,7 @@ import store from './redux/store';
 import Cards from './components/Cards';
 import Detail from './pages/Detail';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Appnavigator from './components/app.navigator';
 
 function App(): React.JSX.Element {
   const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ function App(): React.JSX.Element {
       <SafeAreaView style={styles.main}>
         <StatusBar backgroundColor={'transparent'} hidden={true} />
         <Header />
+        <Appnavigator />
         {/* <View style={styles.container}> */}
         <NavigationContainer>
           <Appbar />

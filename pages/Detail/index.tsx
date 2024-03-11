@@ -2,7 +2,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-export default function Detail() {
+export default function Detail({item}) {
   return (
     <View>
       <Text>Detail</Text>

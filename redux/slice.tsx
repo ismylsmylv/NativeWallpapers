@@ -10,6 +10,7 @@ interface CounterState {
   route: string;
   openItem: object;
   detailOpen: boolean;
+  wishlist: object[];
 }
 
 // Define the initial state using that type
@@ -19,6 +20,7 @@ const initialState: CounterState = {
   route: 'HomeScreen',
   openItem: {},
   detailOpen: false,
+  wishlist: [],
 };
 export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
   const response = await axios.get(
@@ -48,6 +50,16 @@ export const counterSlice = createSlice({
     setDetailOpen: (state, action: PayloadAction<boolean>) => {
       state.detailOpen = action.payload;
     },
+    addWish: (state, action: PayloadAction<boolean>) => {
+      state.wishlist = [...state.wishlist, action.payload];
+      console.log(state.wishlist, 'added');
+    },
+    removeWish: (state, action: PayloadAction<boolean>) => {
+      state.wishlist = state.wishlist.filter(elem => {
+        elem.name != action.payload.name;
+      });
+      console.log(state.wishlist, 'removed');
+    },
   },
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -58,8 +70,15 @@ export const counterSlice = createSlice({
   },
 });
 
-export const {increment, decrement, setRoute, setItem, setDetailOpen} =
-  counterSlice.actions;
+export const {
+  increment,
+  decrement,
+  setRoute,
+  setItem,
+  setDetailOpen,
+  addWish,
+  removeWish,
+} = counterSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value;
 

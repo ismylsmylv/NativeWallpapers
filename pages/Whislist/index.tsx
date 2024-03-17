@@ -5,12 +5,15 @@ import {Text} from 'react-native-svg';
 import Cards from '../../components/Cards';
 import Appbar from '../../components/Appbar';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function WishlistScreen() {
   useEffect(() => {
     console.log('home mounted');
   }, []);
   const navigation = useNavigation();
+  const wishlist = useSelector(state => state.counter.wishlist);
+  const dispatch = useDispatch();
   return (
     <View
       style={[
@@ -18,7 +21,7 @@ export default function WishlistScreen() {
         styles.main,
       ]}>
       <Text>Wishlist</Text>
-      <Cards style={styles.imageGrid} />
+      <Cards style={styles.imageGrid} datas={wishlist} />
       <Appbar navigation={navigation} />
     </View>
   );

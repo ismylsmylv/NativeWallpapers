@@ -1,18 +1,19 @@
 /* eslint-disable prettier/prettier */
+import {faCircleDown, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect} from 'react';
 import {
   BackHandler,
   ImageBackground,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setDetailOpen} from '../../redux/slice';
-import {faCircleDown, faHeart} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {TouchableOpacity} from 'react-native';
-
+import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
+// @ts-ignore
+import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 export default function Detail() {
   useEffect(() => {
     const backAction = () => {
@@ -30,68 +31,98 @@ export default function Detail() {
   }, []);
 
   const item = useSelector(state => state.counter.openItem);
+  const wishlist = useSelector(state => state.counter.wishlist);
   const dispatch = useDispatch();
   const image = {uri: item.img};
+
+  const callback = res => {
+    console.log('Response: ', res);
+  };
+
+  const setWallpaper = async () => {
+    try {
+      await ManageWallpaper.setWallpaper(image, callback, TYPE.HOME);
+      console.log('Wallpaper set successfully');
+    } catch (error) {
+      console.error('Error setting wallpaper: ', error);
+    }
+  };
+  //added
+
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.controlsContainer}>
           <View />
-          {/* <Text>{item.name}</Text> */}
           <View style={styles.controls}>
-            <TouchableOpacity style={styles.controlBtn}>
+            <TouchableOpacity
+              style={styles.controlBtn}
+              onPress={() => {
+                console.log(image);
+              }}>
               <FontAwesomeIcon
                 icon={faCircleDown}
                 style={{color: 'white'}}
                 size={30}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.controlSet}>
-              <Text style={styles.controlSetText}>Set as</Text>
+            <TouchableOpacity style={styles.controlSet} onPress={setWallpaper}>
+              <Text style={styles.controlSetText}>Set as Wallpaper</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.controlBtn, styles.controlBtnWhite]}>
-              <FontAwesomeIcon
-                icon={faHeart}
-                style={{color: '#FA2F4D'}}
-                size={30}
-              />
-              {/* <FontAwesomeIcon icon={faHeart} /> */}
-            </TouchableOpacity>
+            {!wishlist.find(elem => elem.name == item.name) ? (
+              <TouchableOpacity
+                style={[styles.controlBtn, {backgroundColor: '#ffffff'}]}
+                onPress={() => {
+                  dispatch(addWish(item));
+                  console.log(item, 'added to wish');
+                }}>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  style={{color: '#FA2F4D'}}
+                  size={30}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={[styles.controlBtn, {backgroundColor: '#FA2F4D'}]}
+                onPress={() => {
+                  dispatch(removeWish(item));
+                  console.log(item, 'removed from wish');
+                }}>
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  style={{color: 'white'}}
+                  size={30}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </ImageBackground>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
-    // height: 200,
     flex: 1,
-    // width: 100,
     backgroundColor: 'red',
   },
   image: {
     flex: 1,
   },
   controls: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
     gap: 20,
-    // flex: 1,
-    // position: 'absolute',
-    // bottom: 20,
     zIndex: 100,
-    // backgroundColor: 'red',
     left: 0,
     width: '100%',
     height: 80,
     paddingHorizontal: 30,
   },
   controlsContainer: {
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
@@ -101,7 +132,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FA2F4D',
     height: 50,
     width: 50,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -112,7 +142,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FA2F4D',
     height: 50,
     width: 50,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,

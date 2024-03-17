@@ -5,6 +5,9 @@ import {
   Image,
   ImageBackground,
   StyleSheet,
+  Touchable,
+  TouchableHighlight,
+  TouchableNativeFeedback,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,7 +21,7 @@ const ImageItem = ({img, item}: any) => {
   const image = {uri: img};
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <Text>{item.title} example</Text>
+      {/* <Text>{item.title} example</Text> */}
     </ImageBackground>
   );
 };
@@ -40,7 +43,8 @@ export default function Cards({datas, navigation, placeholder}: any) {
           numColumns={2}
           renderItem={({item}) => {
             return (
-              <TouchableOpacity
+              <TouchableHighlight
+                underlayColor="white"
                 onPress={() => {
                   console.log(item.name + ' pressed');
                   navigation.navigate('detail');
@@ -48,7 +52,7 @@ export default function Cards({datas, navigation, placeholder}: any) {
                   dispatch(setDetailOpen(true));
                 }}>
                 <ImageItem title={item.name} img={item.img} item={item} />
-              </TouchableOpacity>
+              </TouchableHighlight>
             );
           }}
           keyExtractor={item => item.id.toString()}
@@ -75,9 +79,18 @@ const styles = StyleSheet.create({
     height: 210,
     width: 150,
     borderRadius: 10,
-    borderWidth: 1,
+    borderWidth: 0,
     overflow: 'hidden',
     margin: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+
+    elevation: 7,
     // backgroundColor: 'red',
   },
   imageGrid: {

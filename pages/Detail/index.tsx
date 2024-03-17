@@ -61,13 +61,14 @@ export default function Detail() {
         <View style={styles.controlsContainer}>
           <View style={styles.upperControlsContainer}>
             <TouchableOpacity
-              style={styles.controlBtn}
+              style={[styles.controlBtn, {backgroundColor: 'white'}]}
               onPress={() => {
                 navigate.goBack();
+                dispatch(setDetailOpen(false));
               }}>
               <FontAwesomeIcon
                 icon={faChevronLeft}
-                style={{color: '#ffffff'}}
+                style={{color: '#FA2F4D'}}
                 size={20}
               />
             </TouchableOpacity>

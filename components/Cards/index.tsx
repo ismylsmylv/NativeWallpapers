@@ -2,11 +2,13 @@
 import React, {useEffect} from 'react';
 import {
   FlatList,
+  Image,
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import {Text} from 'react-native-svg';
+import {Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {setDetailOpen, setItem} from '../../redux/slice';
 
@@ -20,49 +22,54 @@ const ImageItem = ({img, item}: any) => {
     </ImageBackground>
   );
 };
-export default function Cards({datas, navigation}: any) {
+export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
+
   useEffect(() => {
     console.log(datas, 'from cards');
   }, []);
 
   console.log(datas);
+
   return (
-    <FlatList
-      contentContainerStyle={styles.flatContainer}
-      data={datas}
-      numColumns={2}
-      renderItem={({item}) => {
-        return (
-          <TouchableOpacity
-            onPress={() => {
-              console.log(item.name + ' pressed');
-              dispatch(setItem(item));
-              dispatch(setDetailOpen(true));
-              navigation.navigate('detail');
-            }}>
-            <ImageItem title={item.name} img={item.img} item={item} />
-          </TouchableOpacity>
-        );
-      }}
-      keyExtractor={item => item.id.toString()}
-    />
+    <>
+      {datas.length > 0 ? (
+        <FlatList
+          contentContainerStyle={styles.flatContainer}
+          data={datas}
+          numColumns={2}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  console.log(item.name + ' pressed');
+                  dispatch(setItem(item));
+                  dispatch(setDetailOpen(true));
+                  navigation.navigate('detail');
+                }}>
+                <ImageItem title={item.name} img={item.img} item={item} />
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={item => item.id.toString()}
+        />
+      ) : (
+        <View style={styles.placeholder}>
+          <Image
+            source={require('./../../assets/img/wishlist.png')}
+            style={styles.placeholderImg}
+          />
+          <Text style={styles.placeholderText}>
+            {placeholder === 'wishlist'
+              ? 'No items in your wishlist yet'
+              : 'You are offline'}
+          </Text>
+        </View>
+      )}
+    </>
   );
 }
-// renderItem = ({item}) => {
-//   const {items} = this.state;
-//   if (items.empty === true) {
-//     return <View style={[styles.item, styles.itemInvisible]} />;
-//   }
-//   return (
-//     <TouchableOpacity
-//       style={styles.item}
-//       onPress={this.deletePhoto}
-//       key={item.id}>
-//       <Image source={{uri: item.value}} style={{width: 400, height: 120}} />
-//     </TouchableOpacity>
-//   );
-// };
+
 const styles = StyleSheet.create({
   image: {
     height: 210,
@@ -91,4 +98,26 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   contentContainer: {},
+  placeholder: {
+    color: 'red',
+    flex: 1,
+    fontSize: 40,
+    marginTop: -60,
+    // backgroundColor: 'blue',
+    height: 100,
+    width: 300,
+    zIndex: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placeholderImg: {
+    height: 100,
+    width: 100,
+  },
+  placeholderText: {
+    color: 'gray',
+    fontWeight: '900',
+    marginTop: 15,
+  },
 });

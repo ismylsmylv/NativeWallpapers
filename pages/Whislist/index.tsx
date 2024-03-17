@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
-import Cards from '../../components/Cards';
+import {useSelector} from 'react-redux';
 import Appbar from '../../components/Appbar';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import Cards from '../../components/Cards';
 
 export default function WishlistScreen() {
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function WishlistScreen() {
   }, []);
   const navigation = useNavigation();
   const wishlist = useSelector(state => state.counter.wishlist);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   return (
     <View
       style={[
@@ -21,7 +21,12 @@ export default function WishlistScreen() {
         styles.main,
       ]}>
       <Text>Wishlist</Text>
-      <Cards style={styles.imageGrid} datas={wishlist} />
+      <Cards
+        style={styles.imageGrid}
+        datas={wishlist}
+        navigation={navigation}
+        placeholder={'wishlist'}
+      />
       <Appbar navigation={navigation} />
     </View>
   );

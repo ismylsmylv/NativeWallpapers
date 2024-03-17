@@ -1,5 +1,9 @@
 /* eslint-disable prettier/prettier */
-import {faCircleDown, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faCircleDown,
+  faHeart,
+} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect} from 'react';
 import {
@@ -14,7 +18,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
 // @ts-ignore
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
+import {useNavigation} from '@react-navigation/native';
 export default function Detail() {
+  const navigate = useNavigation();
   useEffect(() => {
     const backAction = () => {
       console.log('true');
@@ -53,7 +59,20 @@ export default function Detail() {
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.controlsContainer}>
-          <View />
+          <View style={styles.upperControlsContainer}>
+            <TouchableOpacity
+              style={styles.controlBtn}
+              onPress={() => {
+                navigate.goBack();
+              }}>
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                style={{color: '#ffffff'}}
+                size={20}
+              />
+            </TouchableOpacity>
+            <View style={{flex: 1}} />
+          </View>
           <View style={styles.controls}>
             <TouchableOpacity
               style={styles.controlBtn}
@@ -120,7 +139,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: 80,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
   },
   controlsContainer: {
     alignItems: 'center',
@@ -151,5 +170,12 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '900',
     textTransform: 'uppercase',
+  },
+  upperControlsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
   },
 });

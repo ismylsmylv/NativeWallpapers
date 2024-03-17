@@ -43,9 +43,9 @@ export default function Cards({datas, navigation, placeholder}: any) {
               <TouchableOpacity
                 onPress={() => {
                   console.log(item.name + ' pressed');
+                  navigation.navigate('detail');
                   dispatch(setItem(item));
                   dispatch(setDetailOpen(true));
-                  navigation.navigate('detail');
                 }}>
                 <ImageItem title={item.name} img={item.img} item={item} />
               </TouchableOpacity>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     color: 'gray',
-    fontWeight: '900',
+    fontWeight: '600',
     marginTop: 15,
   },
 });

@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setDetailOpen} from '../../redux/slice';
 import {faCircleDown, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {TouchableOpacity} from 'react-native';
 
 export default function Detail() {
   useEffect(() => {
@@ -35,14 +36,28 @@ export default function Detail() {
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.controlsContainer}>
-          <Text>{item.name}</Text>
+          <View />
+          {/* <Text>{item.name}</Text> */}
           <View style={styles.controls}>
-            <FontAwesomeIcon icon={faCircleDown} />
-            <Text>Set as</Text>
-            <View>
-              <FontAwesomeIcon icon={faHeart} />
+            <TouchableOpacity style={styles.controlBtn}>
+              <FontAwesomeIcon
+                icon={faCircleDown}
+                style={{color: 'white'}}
+                size={30}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.controlSet}>
+              <Text style={styles.controlSetText}>Set as</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.controlBtn, styles.controlBtnWhite]}>
+              <FontAwesomeIcon
+                icon={faHeart}
+                style={{color: '#FA2F4D'}}
+                size={30}
+              />
               {/* <FontAwesomeIcon icon={faHeart} /> */}
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
@@ -69,15 +84,43 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // bottom: 20,
     zIndex: 100,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     left: 0,
     width: '100%',
-    height: 50,
+    height: 80,
+    paddingHorizontal: 30,
   },
   controlsContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     flex: 1,
+  },
+  controlBtn: {
+    borderRadius: 60,
+    backgroundColor: '#FA2F4D',
+    height: 50,
+    width: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  controlBtnWhite: {
+    backgroundColor: '#ffffff',
+  },
+  controlSet: {
+    backgroundColor: '#FA2F4D',
+    height: 50,
+    width: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    flex: 1,
+  },
+  controlSetText: {
+    color: '#ffffff',
+    fontWeight: '900',
+    textTransform: 'uppercase',
   },
 });

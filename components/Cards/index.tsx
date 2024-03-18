@@ -15,7 +15,7 @@ import {
 import {Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {fetchWalls, setDetailOpen, setItem} from '../../redux/slice';
-
+import {Dimensions} from 'react-native';
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
 
@@ -26,6 +26,7 @@ const ImageItem = ({img, item}: any) => {
     </ImageBackground>
   );
 };
+const windowWidth = Dimensions.get('window').width;
 export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
 
@@ -41,7 +42,7 @@ export default function Cards({datas, navigation, placeholder}: any) {
     setTimeout(() => {
       dispatch(fetchWalls());
       setRefreshing(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   return (
@@ -89,8 +90,8 @@ export default function Cards({datas, navigation, placeholder}: any) {
 
 const styles = StyleSheet.create({
   image: {
-    height: 210,
-    width: 150,
+    height: (windowWidth / 2 - 20) * 1.5,
+    width: windowWidth / 2 - 20,
     borderRadius: 10,
     borderWidth: 0,
     overflow: 'hidden',
@@ -106,23 +107,23 @@ const styles = StyleSheet.create({
     elevation: 7,
     // backgroundColor: 'red',
   },
-  imageGrid: {
-    marginTop: 20,
-    marginBottom: 150,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: 20,
-  },
+  // imageGrid: {
+  //   marginTop: 20,
+  //   marginBottom: 150,
+  //   display: 'flex',
+  //   flexDirection: 'row',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   flexWrap: 'wrap',
+  //   gap: 20,
+  // },
   flatContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
     // gap: 10,
     alignItems: 'flex-start',
     flexGrow: 0,
-
+    width: windowWidth,
     paddingBottom: 90,
   },
   contentContainer: {},

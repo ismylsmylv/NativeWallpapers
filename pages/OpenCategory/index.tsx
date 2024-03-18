@@ -25,7 +25,13 @@ function OpenCategory() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <Cards datas={openCategory} navigation={navigation} />
 
       <Appbar navigation={navigation} />

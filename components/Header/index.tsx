@@ -11,7 +11,7 @@ export default function Header() {
     !detailOpen && (
       <View style={styles.container}>
         <FontAwesomeIcon icon={faBars} size={20} color="#7D7A8C" />
-        <Text style={styles.heading}>Wallpaper</Text>
+        <Text style={styles.heading}>WallVista</Text>
         <FontAwesomeIcon icon={faMagnifyingGlass} size={20} color="#7D7A8C" />
       </View>
     )

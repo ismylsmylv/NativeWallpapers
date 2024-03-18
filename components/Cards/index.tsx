@@ -5,6 +5,7 @@ import {
   Image,
   ImageBackground,
   RefreshControl,
+  ScrollView,
   StyleSheet,
   Touchable,
   TouchableHighlight,
@@ -81,14 +82,17 @@ export default function Cards({datas, navigation, placeholder}: any) {
         />
       ) : (
         <View style={styles.placeholder}>
-          <Image
-            source={require('./../../assets/img/wishlist.png')}
-            style={styles.placeholderImg}
-          />
+          {placeholder == 'wishlist' && (
+            <Image
+              source={require('./../../assets/img/wishlist.png')}
+              style={styles.placeholderImg}
+            />
+          )}
+
           <Text style={styles.placeholderText}>
             {placeholder === 'wishlist'
               ? 'No items in your wishlist yet'
-              : 'You are offline'}
+              : 'Nothing to show here'}
           </Text>
         </View>
       )}

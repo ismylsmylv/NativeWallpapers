@@ -69,7 +69,7 @@ function CategoryScreen() {
   const dispatch = useDispatch();
   return (
     <SafeAreaView>
-      <ScrollView style={styles.container}>
+      <ScrollView style={[styles.container, {marginBottom: 80}]}>
         {categories.map(elem => {
           return (
             // <ImageBackground

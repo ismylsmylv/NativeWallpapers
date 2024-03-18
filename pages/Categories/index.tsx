@@ -6,10 +6,14 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Appbar from '../../components/Appbar';
+import {useDispatch} from 'react-redux';
+import {setselectedCategory} from '../../redux/slice';
 const categories = [
   {
     title: 'Nature',
@@ -62,6 +66,7 @@ function CategoryScreen() {
     console.log('category mounted');
   }, []);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
@@ -73,7 +78,14 @@ function CategoryScreen() {
             //   key={elem.title}>
             //   <Text style={styles.catName}>{elem.title}</Text>
             // </ImageBackground>
-            <View style={styles.container} key={elem.title}>
+            <TouchableOpacity
+              onPress={() => {
+                console.log(elem.title, 'clicked');
+                dispatch(setselectedCategory(elem.title));
+                navigation.navigate('opencategory');
+              }}
+              style={styles.container}
+              key={elem.title}>
               <Image
                 source={{
                   uri: elem.image,
@@ -83,7 +95,7 @@ function CategoryScreen() {
               <ScrollView contentContainerStyle={styles.contentContainer}>
                 <Text style={styles.catName}>{elem.title}</Text>
               </ScrollView>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>

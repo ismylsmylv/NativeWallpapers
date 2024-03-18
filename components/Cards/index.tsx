@@ -13,8 +13,13 @@ import {
   View,
 } from 'react-native';
 import {Text} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {fetchWalls, setDetailOpen, setItem} from '../../redux/slice';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  fetchWalls,
+  setDetailOpen,
+  setItem,
+  setopenCategory,
+} from '../../redux/slice';
 import {Dimensions} from 'react-native';
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
@@ -29,8 +34,11 @@ const ImageItem = ({img, item}: any) => {
 const windowWidth = Dimensions.get('window').width;
 export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
+  const selectedCategory = useSelector(state => state.counter.selectedCategory);
 
   useEffect(() => {
+    dispatch(setopenCategory(selectedCategory));
+
     console.log(datas, 'from cards');
   }, []);
 

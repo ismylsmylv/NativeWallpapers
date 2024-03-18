@@ -13,6 +13,8 @@ interface CounterState {
   detailOpen: boolean;
   wishlist: object[];
   activeFilter: string;
+  selectedCategory: string;
+  openCategory: object[];
 }
 
 // Define the initial state using that type
@@ -25,6 +27,8 @@ const initialState: CounterState = {
   detailOpen: false,
   wishlist: [],
   activeFilter: 'for you',
+  selectedCategory: '',
+  openCategory: [],
 };
 export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
   const response = await axios.get(
@@ -37,13 +41,6 @@ export const counterSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: state => {
-      state.value += 1;
-    },
-    decrement: state => {
-      state.value -= 1;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
     setRoute: (state, action: PayloadAction<string>) => {
       state.route = action.payload;
     },
@@ -105,6 +102,16 @@ export const counterSlice = createSlice({
     setactiveFilter: (state, action: PayloadAction<string>) => {
       state.activeFilter = action.payload;
     },
+    setselectedCategory: (state, action: PayloadAction<string>) => {
+      state.selectedCategory = action.payload;
+    },
+    setopenCategory: state => {
+      state.openCategory = state.wallpapers.filter(elem => {
+        return elem.category.includes(state.selectedCategory);
+      });
+      // console.log(state.selectedCategory, 'selected from slice');
+      // console.log(JSON.stringify(state.openCategory), 'stringed from slice');
+    },
   },
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -118,8 +125,6 @@ export const counterSlice = createSlice({
 });
 
 export const {
-  increment,
-  decrement,
   setRoute,
   setItem,
   setDetailOpen,
@@ -129,6 +134,8 @@ export const {
   filterPopular,
   filterTrending,
   setactiveFilter,
+  setselectedCategory,
+  setopenCategory,
 } = counterSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value;

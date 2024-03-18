@@ -72,10 +72,24 @@ export const counterSlice = createSlice({
         obj,
       );
     },
-    removeWish: (state, action: PayloadAction<boolean>) => {
+    removeWish: (state, action: PayloadAction<object | any>) => {
       state.wishlist = state.wishlist.filter(elem => {
         elem.name != action.payload.name;
       });
+      const updatedLikes = action.payload.like - 1;
+      const obj = {
+        name: action.payload.name,
+        img: action.payload.img,
+        view: action.payload.view,
+        like: updatedLikes,
+        rating: action.payload.rating,
+        category: action.payload.category,
+      };
+      axios.put(
+        'https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers/' +
+          action.payload.id,
+        obj,
+      );
       console.log(state.wishlist, 'removed');
     },
     filterForYou: state => {

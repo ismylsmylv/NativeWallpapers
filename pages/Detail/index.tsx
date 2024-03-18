@@ -19,6 +19,7 @@ import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
 // @ts-ignore
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 export default function Detail() {
   const navigate = useNavigation();
   useEffect(() => {
@@ -48,6 +49,19 @@ export default function Detail() {
   const setWallpaper = async () => {
     try {
       await ManageWallpaper.setWallpaper(image, callback, TYPE.HOME);
+      const updatedRating = item.rating + 1;
+      const obj = {
+        name: item.name,
+        img: item.img,
+        view: item.view,
+        like: item.like,
+        rating: updatedRating,
+        category: item.category,
+      };
+      axios.put(
+        'https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers/' + item.id,
+        obj,
+      );
       console.log('Wallpaper set successfully');
     } catch (error) {
       console.error('Error setting wallpaper: ', error);

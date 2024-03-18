@@ -42,6 +42,7 @@ export default function Detail() {
   const dispatch = useDispatch();
   const image = {uri: item.img};
   const [wallpaperSet, setwallpaperSet] = useState(false);
+  const [fakeLoading, setfakeLoading] = useState(false);
   const callback = (res: any) => {
     console.log('Response: ', res);
   };
@@ -108,7 +109,11 @@ export default function Detail() {
               }
               onPress={() => {
                 setWallpaper();
-                setwallpaperSet(true);
+                setfakeLoading(true);
+                setTimeout(() => {
+                  setfakeLoading(false);
+                  setwallpaperSet(true);
+                }, 1000);
               }}>
               <Text
                 style={
@@ -116,7 +121,11 @@ export default function Detail() {
                     ? [styles.controlSetText, {color: '#ffffff'}]
                     : [styles.controlSetText, {color: '#FA2F4D'}]
                 }>
-                {wallpaperSet ? 'Wallpaper set' : 'Set as Wallpaper'}
+                {wallpaperSet
+                  ? 'Wallpaper set'
+                  : fakeLoading
+                  ? 'Please wait...'
+                  : 'Set as Wallpaper'}
               </Text>
             </TouchableOpacity>
             {!wishlist.find(

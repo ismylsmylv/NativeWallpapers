@@ -1,0 +1,86 @@
+[
+    {
+        "name": "iPhone 13 Blue Dark",
+        "img": "https://r1.ilikewallpaper.net/iphone-15-wallpapers/download-146677/iPhone-13-Blue-Dark.jpg",
+        "view": 2,
+        "like": 32,
+        "rating": 18,
+        "category": [
+            "Abstract",
+            "Illustration"
+        ],
+        "id": "6"
+    },
+    {
+        "name": "Rainbow",
+        "img": "https://wallpapers.com/images/hd/rainbow-iphone-xtnpxsl3avgvg6t7.jpg",
+        "view": 21,
+        "like": 2,
+        "rating": 57,
+        "category": [
+            "Abstract",
+            "Illustration"
+        ],
+        "id": "7"
+    },
+    {
+        "name": "Sunset Lake Art",
+        "img": "https://iphoneswallpapers.com/wp-content/uploads/2023/09/Sunset-Lake-Art-iPhone-Wallpaper-4K.jpg",
+        "view": 25,
+        "like": 12,
+        "rating": 80,
+        "category": [
+            "Photography",
+            "Nature"
+        ],
+        "id": "8"
+    },
+    {
+        "name": "Black And White",
+        "img": "https://4kwallpapers.com/images/wallpapers/vestrahorn-iceland-frozen-lake-mountain-peak-mist-winter-1080x1920-5929.jpg",
+        "view": 1,
+        "like": 4,
+        "rating": 98,
+        "category": [
+            "Photography",
+            "Nature"
+        ],
+        "id": "9"
+    },
+    {
+        "name": "Pinkies",
+        "img": "https://i0.wp.com/artisthue.com/wp-content/uploads/2023/01/aesthetic-Iphone-wallpaper-3.jpeg?fit=473%2C1024&ssl=1",
+        "view": 21,
+        "like": 34,
+        "rating": 36,
+        "category": [
+            "Minimalist",
+            "Abstract"
+        ],
+        "id": "10"
+    },
+    {
+        "name": "Phone Gaming",
+        "img": "https://wallpapercave.com/wp/wp4826982.jpg",
+        "view": 231,
+        "like": 34,
+        "rating": 43,
+        "category": [
+            "Minimalist",
+            "Gaming"
+        ],
+        "id": "11"
+    },
+    {
+        "name": "Eerie and Fantasy",
+        "img": "https://preview.redd.it/eerie-and-fantasy-wallpapers-for-your-mobile-devices-v0-h2un16o7q0oa1.jpg?width=640&crop=smart&auto=webp&s=5cfff599d8cdf7a1ddf1d439a3a218bcec1d3120",
+        "view": 231,
+        "like": 34,
+        "rating": 43,
+        "category": [
+            "Illustration",
+            "Sci-Fi/Fantasy"
+        ],
+        "id": "12"
+    }
+]

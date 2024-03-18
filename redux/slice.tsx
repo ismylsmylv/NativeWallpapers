@@ -7,20 +7,24 @@ import axios from 'axios';
 interface CounterState {
   value: number;
   wallpapers: object[];
+  wallpapersBack: object[];
   route: string;
   openItem: object;
   detailOpen: boolean;
   wishlist: object[];
+  activeFilter: string;
 }
 
 // Define the initial state using that type
 const initialState: CounterState = {
   value: 0,
   wallpapers: [],
+  wallpapersBack: [],
   route: 'HomeScreen',
   openItem: {},
   detailOpen: false,
   wishlist: [],
+  activeFilter: 'for you',
 };
 export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
   const response = await axios.get(
@@ -74,12 +78,27 @@ export const counterSlice = createSlice({
       });
       console.log(state.wishlist, 'removed');
     },
+    filterForYou: state => {
+      state.wallpapers = state.wallpapersBack;
+    },
+    filterPopular: state => {
+      // state.wallpapers = state.wallpapers.filter(elem=>);
+      state.wallpapers.sort((a: any, b: any) => b.like - a.like);
+    },
+    filterTrending: state => {
+      state.wallpapers.sort((a: any, b: any) => b.rating - a.rating);
+    },
+    setactiveFilter: (state, action: PayloadAction<string>) => {
+      state.activeFilter = action.payload;
+    },
   },
   extraReducers: builder => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchWalls.fulfilled, (state, action) => {
       // Add user to the state array
+
       state.wallpapers = action.payload;
+      state.wallpapersBack = action.payload;
     });
   },
 });
@@ -92,6 +111,10 @@ export const {
   setDetailOpen,
   addWish,
   removeWish,
+  filterForYou,
+  filterPopular,
+  filterTrending,
+  setactiveFilter,
 } = counterSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.counter.value;

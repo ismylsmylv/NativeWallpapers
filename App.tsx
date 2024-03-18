@@ -28,10 +28,11 @@ function App(): React.JSX.Element {
   //     setRefreshing(false);
   //   }, 2000);
   // }, []);
+  // const detailOpen = useSelector(state => state.counter.detailOpen);
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.main}>
-        <StatusBar backgroundColor={'white'} hidden={false} />
+        <StatusBar backgroundColor={'white'} hidden={true} />
         {/* <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> */}
 
         <Header />

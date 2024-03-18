@@ -120,8 +120,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     // gap: 10,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flexGrow: 0,
+
+    paddingBottom: 90,
   },
   contentContainer: {},
   placeholder: {

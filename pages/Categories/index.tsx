@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     zIndex: 10,
     fontSize: 30,
     fontWeight: '800',
+    padding: 10,
   },
   backgroundImage: {
     position: 'absolute',

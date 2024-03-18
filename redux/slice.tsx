@@ -50,7 +50,7 @@ export const counterSlice = createSlice({
     setDetailOpen: (state, action: PayloadAction<boolean>) => {
       state.detailOpen = action.payload;
     },
-    addWish: (state, action: PayloadAction<boolean>) => {
+    addWish: (state, action: PayloadAction<boolean | any>) => {
       state.wishlist = [...state.wishlist, action.payload];
       console.log(state.wishlist, 'added');
       const updatedLikes = action.payload.like + 1;

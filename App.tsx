@@ -6,7 +6,12 @@
  */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {
+  RefreshControl,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+} from 'react-native';
 import 'react-native-gesture-handler';
 import {Provider, useSelector} from 'react-redux';
 
@@ -15,11 +20,20 @@ import Appnavigator from './components/app.navigator';
 import store from './redux/store';
 function App(): React.JSX.Element {
   // const navigation = useNavigation();
+  // const [refreshing, setRefreshing] = React.useState(false);
 
+  // const onRefresh = React.useCallback(() => {
+  //   setRefreshing(true);
+  //   setTimeout(() => {
+  //     setRefreshing(false);
+  //   }, 2000);
+  // }, []);
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.main}>
-        <StatusBar backgroundColor={'transparent'} hidden={true} />
+        <StatusBar backgroundColor={'white'} hidden={false} />
+        {/* <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> */}
+
         <Header />
         <Appnavigator />
         {/* <View style={styles.container}> */}

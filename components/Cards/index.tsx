@@ -4,6 +4,7 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  RefreshControl,
   StyleSheet,
   Touchable,
   TouchableHighlight,
@@ -13,7 +14,7 @@ import {
 } from 'react-native';
 import {Text} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {setDetailOpen, setItem} from '../../redux/slice';
+import {fetchWalls, setDetailOpen, setItem} from '../../redux/slice';
 
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
@@ -33,6 +34,15 @@ export default function Cards({datas, navigation, placeholder}: any) {
   }, []);
 
   console.log(datas);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      dispatch(fetchWalls());
+      setRefreshing(false);
+    }, 2000);
+  }, []);
 
   return (
     <>
@@ -41,6 +51,9 @@ export default function Cards({datas, navigation, placeholder}: any) {
           contentContainerStyle={styles.flatContainer}
           data={datas}
           numColumns={2}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           renderItem={({item}) => {
             return (
               <TouchableHighlight

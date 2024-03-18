@@ -5,7 +5,7 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   BackHandler,
   ImageBackground,
@@ -40,8 +40,8 @@ export default function Detail() {
   const wishlist = useSelector(state => state.counter.wishlist);
   const dispatch = useDispatch();
   const image = {uri: item.img};
-
-  const callback = res => {
+  const [wallpaperSet, setwallpaperSet] = useState(false);
+  const callback = (res: any) => {
     console.log('Response: ', res);
   };
 
@@ -86,10 +86,28 @@ export default function Detail() {
                 size={30}
               />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.controlSet} onPress={setWallpaper}>
-              <Text style={styles.controlSetText}>Set as Wallpaper</Text>
+            <TouchableOpacity
+              style={
+                !wallpaperSet
+                  ? [styles.controlSet, {backgroundColor: '#FA2F4D'}]
+                  : [styles.controlSet, {backgroundColor: '#ffffff'}]
+              }
+              onPress={() => {
+                setWallpaper();
+                setwallpaperSet(true);
+              }}>
+              <Text
+                style={
+                  !wallpaperSet
+                    ? [styles.controlSetText, {color: '#ffffff'}]
+                    : [styles.controlSetText, {color: '#FA2F4D'}]
+                }>
+                {wallpaperSet ? 'Wallpaper set' : 'Set as Wallpaper'}
+              </Text>
             </TouchableOpacity>
-            {!wishlist.find(elem => elem.name == item.name) ? (
+            {!wishlist.find(
+              (elem: {name: string}) => elem.name == item.name,
+            ) ? (
               <TouchableOpacity
                 style={[styles.controlBtn, {backgroundColor: '#ffffff'}]}
                 onPress={() => {

@@ -22,6 +22,8 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
 
 const downloadImage = async (imageUri: string) => {
@@ -193,6 +195,15 @@ export default function Detail() {
                 style={[styles.controlBtn, {backgroundColor: '#FA2F4D'}]}
                 onPress={() => {
                   dispatch(addWish(item));
+                  const storeData = async value => {
+                    try {
+                      const jsonValue = JSON.stringify(value);
+                      await AsyncStorage.setItem('my-key', jsonValue);
+                    } catch (e) {
+                      // saving error
+                    }
+                  };
+                  storeData(item);
                   console.log(item, 'added to wish');
                 }}>
                 <FontAwesomeIcon

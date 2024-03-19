@@ -5,12 +5,16 @@
  * @format
  */
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {
+  Button,
+  DrawerLayoutAndroid,
   RefreshControl,
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import 'react-native-gesture-handler';
 import {Provider, useSelector} from 'react-redux';
@@ -18,7 +22,32 @@ import {Provider, useSelector} from 'react-redux';
 import Header from './components/Header';
 import Appnavigator from './components/app.navigator';
 import store from './redux/store';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+import HomeScreen from './pages/Home';
+
 function App(): React.JSX.Element {
+  const drawer = useRef<DrawerLayoutAndroid>(null);
+  const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>(
+    'left',
+  );
+  const changeDrawerPosition = () => {
+    if (drawerPosition === 'left') {
+      setDrawerPosition('right');
+    } else {
+      setDrawerPosition('left');
+    }
+  };
+  const navigationView = () => (
+    <View style={[styles.container, styles.navigationContainer]}>
+      <Text style={styles.paragraph}>I'm in the Drawer!</Text>
+      <Button
+        title="Close drawer"
+        onPress={() => drawer.current?.closeDrawer()}
+      />
+    </View>
+  );
+
   // const navigation = useNavigation();
   // const [refreshing, setRefreshing] = React.useState(false);
 
@@ -29,20 +58,30 @@ function App(): React.JSX.Element {
   //   }, 2000);
   // }, []);
   // const detailOpen = useSelector(state => state.counter.detailOpen);
+  const Drawer = createDrawerNavigator();
   return (
     <Provider store={store}>
-      <SafeAreaView style={styles.main}>
-        <StatusBar backgroundColor={'white'} hidden={true} />
-        {/* <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> */}
-
-        <Header />
-        <Appnavigator />
-        {/* <View style={styles.container}> */}
-        {/* <NavigationContainer>
+      <DrawerLayoutAndroid
+        ref={drawer}
+        drawerWidth={300}
+        drawerPosition={drawerPosition}
+        renderNavigationView={navigationView}>
+        <SafeAreaView style={styles.main}>
+          <StatusBar backgroundColor={'white'} hidden={true} />
+          {/* <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> */}
+          <Button
+            title="Open drawer"
+            onPress={() => drawer.current?.openDrawer()}
+          />
+          <Header />
+          <Appnavigator />
+          {/* <View style={styles.container}> */}
+          {/* <NavigationContainer>
           <Appbar navigation={navigation} />
         </NavigationContainer> */}
-        {/* </View> */}
-      </SafeAreaView>
+          {/* </View> */}
+        </SafeAreaView>
+      </DrawerLayoutAndroid>
     </Provider>
   );
 }
@@ -79,6 +118,20 @@ const styles = StyleSheet.create({
   icon: {
     height: 30,
     width: 30,
+  },
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   padding: 16,
+  // },
+  navigationContainer: {
+    backgroundColor: '#ecf0f1',
+  },
+  paragraph: {
+    padding: 16,
+    fontSize: 15,
+    textAlign: 'center',
   },
 });
 

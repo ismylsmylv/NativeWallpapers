@@ -5,14 +5,34 @@ import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
 import {useSelector} from 'react-redux';
 import Appbar from '../../components/Appbar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Cards from '../../components/Cards';
-
+let jsonValue;
+const getData = async () => {
+  try {
+    jsonValue = await AsyncStorage.getItem('wishlist');
+    console.log(jsonValue, 'get local');
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (e) {
+    // error reading value
+  }
+};
+const storeData = async value => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('wishlist', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
 export default function WishlistScreen() {
   useEffect(() => {
     console.log('home mounted');
+    getData();
   }, []);
   const navigation = useNavigation();
   const wishlist = useSelector(state => state.counter.wishlist);
+  // const wishlist = jsonValue;
   // const dispatch = useDispatch();
   return (
     <View

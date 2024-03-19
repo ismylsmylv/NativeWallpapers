@@ -2,7 +2,24 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '@reduxjs/toolkit/query';
 import axios from 'axios';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('wishlist');
+    console.log(jsonValue, 'get local');
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (e) {
+    // error reading value
+  }
+};
+const storeData = async value => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('wishlist', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
 // Define a type for the slice state
 interface CounterState {
   value: number;
@@ -54,6 +71,7 @@ export const counterSlice = createSlice({
     addWish: (state, action: PayloadAction<boolean | any>) => {
       state.wishlist = [...state.wishlist, action.payload];
       console.log(state.wishlist, 'added');
+      //change wall data
       const updatedLikes = action.payload.like + 1;
       const obj = {
         name: action.payload.name,
@@ -68,11 +86,15 @@ export const counterSlice = createSlice({
           action.payload.id,
         obj,
       );
+      //change user data
+      //axios
     },
     removeWish: (state, action: PayloadAction<object | any>) => {
       state.wishlist = state.wishlist.filter(elem => {
         elem.name != action.payload.name;
       });
+      //change wall data
+
       const updatedLikes = action.payload.like - 1;
       const obj = {
         name: action.payload.name,
@@ -88,6 +110,8 @@ export const counterSlice = createSlice({
         obj,
       );
       console.log(state.wishlist, 'removed');
+      //change user data
+      //axios
     },
     filterForYou: state => {
       state.wallpapers = state.wallpapersBack;

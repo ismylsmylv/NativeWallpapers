@@ -22,95 +22,31 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
+// await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
 
 const downloadImage = async (imageUri: string) => {
   try {
-    // const granted = await PermissionsAndroid.request(
-    //   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    //   {
-    //     title: 'Storage Permission Required',
-    //     message: 'App needs access to your storage to save images.',
-    //   },
-    // );
-
-    // const granted = await PermissionsAndroid.request(
-    //   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    //   {
-    //     title: 'Cool Photo App Camera Permission',
-    //     message:
-    //       'Cool Photo App needs access to your camera ' +
-    //       'so you can take awesome pictures.',
-    //     buttonNeutral: 'Ask Me Later',
-    //     buttonNegative: 'Cancel',
-    //     buttonPositive: 'OK',
-    //   },
-    // );
-
-    // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    // Permission granted, proceed with download
     const folderPath = `${RNFetchBlob.fs.dirs.PictureDir}/WallVista`;
 
-    try {
-      await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
-      const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-      const res = await RNFetchBlob.config({
-        fileCache: true,
-        appendExt: 'jpg',
-        path: `${folderPath}/${filename}`,
-      }).fetch('GET', imageUri);
-      ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
-    } catch (error: any) {
-      if (error.message.includes('already exists')) {
-        const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-        const res = await RNFetchBlob.config({
-          fileCache: true,
-          appendExt: 'jpg',
-          path: `${folderPath}/${filename}`,
-        }).fetch('GET', imageUri);
-        console.log(res);
-        ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
-      } else {
-        console.error('Error creating folder:', error);
-        const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-        const res = await RNFetchBlob.config({
-          fileCache: true,
-          appendExt: 'jpg',
-          path: `${folderPath}/${filename}`,
-        }).fetch('GET', imageUri);
-        console.log(res);
-        ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
-      }
+    const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+    const path = `${folderPath}/${filename}`;
+
+    // Check if the image file already exists
+    const exists = await RNFetchBlob.fs.exists(path);
+    if (exists) {
+      ToastAndroid.show('Image already downloaded!', ToastAndroid.SHORT);
+      return; // Exit early if the image is already downloaded
     }
 
-    // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
-
-    // } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
-    //   // Permission denied permanently, guide user to app settings
-    //   const granted = await PermissionsAndroid.request(
-    //     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    //     {
-    //       title: 'Cool Photo App Camera Permission',
-    //       message:
-    //         'Cool Photo App needs access to your camera ' +
-    //         'so you can take awesome pictures.',
-    //       buttonNeutral: 'Ask Me Later',
-    //       buttonNegative: 'Cancel',
-    //       buttonPositive: 'OK',
-    //     },
-    //   );
-    //   console.log(granted, 'try');
-    //   ToastAndroid.show(
-    //     'Permission denied. Please enable storage access in app settings.',
-    //     ToastAndroid.SHORT,
-    //   );
-    // } else {
-    //   // Permission denied, normal handling
-    //   ToastAndroid.show(
-    //     'Permission denied. Cannot download image.',
-    //     ToastAndroid.SHORT,
-    //   );
-    // }
+    // Attempt to fetch the image
+    const res = await RNFetchBlob.config({
+      fileCache: true,
+      appendExt: 'jpg',
+      path: path,
+    }).fetch('GET', imageUri);
+    ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
   } catch (error) {
+    // Handle any errors that occur during the process
     console.error('Error downloading image:', error);
     ToastAndroid.show(
       'Error downloading image. Please try again.',

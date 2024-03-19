@@ -1,15 +1,14 @@
+/* eslint-disable prettier/prettier */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
  * @format
  */
-/* eslint-disable prettier/prettier */
 import React, {useRef, useState} from 'react';
 import {
   Button,
   DrawerLayoutAndroid,
-  RefreshControl,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -17,27 +16,19 @@ import {
   View,
 } from 'react-native';
 import 'react-native-gesture-handler';
-import {Provider, useSelector} from 'react-redux';
+import {Provider} from 'react-redux';
 
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import Header from './components/Header';
 import Appnavigator from './components/app.navigator';
 import store from './redux/store';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './pages/Home';
 
 function App(): React.JSX.Element {
   const drawer = useRef<DrawerLayoutAndroid>(null);
   const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>(
     'left',
   );
-  const changeDrawerPosition = () => {
-    if (drawerPosition === 'left') {
-      setDrawerPosition('right');
-    } else {
-      setDrawerPosition('left');
-    }
-  };
+
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
       <Text style={styles.paragraph}>I'm in the Drawer!</Text>
@@ -48,16 +39,6 @@ function App(): React.JSX.Element {
     </View>
   );
 
-  // const navigation = useNavigation();
-  // const [refreshing, setRefreshing] = React.useState(false);
-
-  // const onRefresh = React.useCallback(() => {
-  //   setRefreshing(true);
-  //   setTimeout(() => {
-  //     setRefreshing(false);
-  //   }, 2000);
-  // }, []);
-  // const detailOpen = useSelector(state => state.counter.detailOpen);
   const Drawer = createDrawerNavigator();
   return (
     <Provider store={store}>
@@ -68,12 +49,11 @@ function App(): React.JSX.Element {
         renderNavigationView={navigationView}>
         <SafeAreaView style={styles.main}>
           <StatusBar backgroundColor={'white'} hidden={true} />
-          {/* <RefreshControl refreshing={refreshing} onRefresh={onRefresh} /> */}
-          <Button
+          {/* <Button
             title="Open drawer"
             onPress={() => drawer.current?.openDrawer()}
-          />
-          <Header />
+          /> */}
+          <Header drawerCurrent={drawer.current} />
           <Appnavigator />
           {/* <View style={styles.container}> */}
           {/* <NavigationContainer>

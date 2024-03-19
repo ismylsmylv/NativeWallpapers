@@ -9,7 +9,6 @@ import React, {useEffect, useState} from 'react';
 import {
   BackHandler,
   ImageBackground,
-  PermissionsAndroid,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -21,44 +20,96 @@ import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
 // @ts-ignore
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-// import {FileSystem, shareAsync} from 'expo';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
-const downloadImage = async imageUri => {
+
+const downloadImage = async (imageUri: string) => {
   try {
-    // Request permission to access the filesystem
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      {
-        title: 'Storage Permission Required',
-        message: 'App needs access to your storage to save images.',
-      },
-    );
+    // const granted = await PermissionsAndroid.request(
+    //   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    //   {
+    //     title: 'Storage Permission Required',
+    //     message: 'App needs access to your storage to save images.',
+    //   },
+    // );
 
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      // Create WallVista folder if it doesn't exist
-      const folderPath = `${RNFetchBlob.fs.dirs.PictureDir}/WallVista`;
+    // const granted = await PermissionsAndroid.request(
+    //   PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    //   {
+    //     title: 'Cool Photo App Camera Permission',
+    //     message:
+    //       'Cool Photo App needs access to your camera ' +
+    //       'so you can take awesome pictures.',
+    //     buttonNeutral: 'Ask Me Later',
+    //     buttonNegative: 'Cancel',
+    //     buttonPositive: 'OK',
+    //   },
+    // );
+
+    // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    // Permission granted, proceed with download
+    const folderPath = `${RNFetchBlob.fs.dirs.PictureDir}/WallVista`;
+
+    try {
       await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
-
-      // Extract image filename from URI
       const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-
-      // Download the image
       const res = await RNFetchBlob.config({
         fileCache: true,
         appendExt: 'jpg',
         path: `${folderPath}/${filename}`,
       }).fetch('GET', imageUri);
-
-      // Show success message
       ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
-    } else {
-      // Permission denied
-      ToastAndroid.show(
-        'Permission denied. Cannot download image.',
-        ToastAndroid.SHORT,
-      );
+    } catch (error: any) {
+      if (error.message.includes('already exists')) {
+        const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+        const res = await RNFetchBlob.config({
+          fileCache: true,
+          appendExt: 'jpg',
+          path: `${folderPath}/${filename}`,
+        }).fetch('GET', imageUri);
+        console.log(res);
+        ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
+      } else {
+        console.error('Error creating folder:', error);
+        const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+        const res = await RNFetchBlob.config({
+          fileCache: true,
+          appendExt: 'jpg',
+          path: `${folderPath}/${filename}`,
+        }).fetch('GET', imageUri);
+        console.log(res);
+        ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
+      }
     }
+
+    // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
+
+    // } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+    //   // Permission denied permanently, guide user to app settings
+    //   const granted = await PermissionsAndroid.request(
+    //     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    //     {
+    //       title: 'Cool Photo App Camera Permission',
+    //       message:
+    //         'Cool Photo App needs access to your camera ' +
+    //         'so you can take awesome pictures.',
+    //       buttonNeutral: 'Ask Me Later',
+    //       buttonNegative: 'Cancel',
+    //       buttonPositive: 'OK',
+    //     },
+    //   );
+    //   console.log(granted, 'try');
+    //   ToastAndroid.show(
+    //     'Permission denied. Please enable storage access in app settings.',
+    //     ToastAndroid.SHORT,
+    //   );
+    // } else {
+    //   // Permission denied, normal handling
+    //   ToastAndroid.show(
+    //     'Permission denied. Cannot download image.',
+    //     ToastAndroid.SHORT,
+    //   );
+    // }
   } catch (error) {
     console.error('Error downloading image:', error);
     ToastAndroid.show(
@@ -68,8 +119,6 @@ const downloadImage = async imageUri => {
   }
 };
 
-// const requestCameraPermission = async () => {
-//   try {
 //     const granted = await PermissionsAndroid.request(
 //       PermissionsAndroid.PERMISSIONS.CAMERA,
 //       {

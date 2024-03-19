@@ -9,17 +9,88 @@ import React, {useEffect, useState} from 'react';
 import {
   BackHandler,
   ImageBackground,
+  PermissionsAndroid,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
 // @ts-ignore
-import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+// import {FileSystem, shareAsync} from 'expo';
+import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
+import RNFetchBlob from 'rn-fetch-blob';
+const downloadImage = async imageUri => {
+  try {
+    // Request permission to access the filesystem
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        title: 'Storage Permission Required',
+        message: 'App needs access to your storage to save images.',
+      },
+    );
+
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      // Create WallVista folder if it doesn't exist
+      const folderPath = `${RNFetchBlob.fs.dirs.PictureDir}/WallVista`;
+      await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
+
+      // Extract image filename from URI
+      const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
+
+      // Download the image
+      const res = await RNFetchBlob.config({
+        fileCache: true,
+        appendExt: 'jpg',
+        path: `${folderPath}/${filename}`,
+      }).fetch('GET', imageUri);
+
+      // Show success message
+      ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
+    } else {
+      // Permission denied
+      ToastAndroid.show(
+        'Permission denied. Cannot download image.',
+        ToastAndroid.SHORT,
+      );
+    }
+  } catch (error) {
+    console.error('Error downloading image:', error);
+    ToastAndroid.show(
+      'Error downloading image. Please try again.',
+      ToastAndroid.SHORT,
+    );
+  }
+};
+
+// const requestCameraPermission = async () => {
+//   try {
+//     const granted = await PermissionsAndroid.request(
+//       PermissionsAndroid.PERMISSIONS.CAMERA,
+//       {
+//         title: 'Cool Photo App Camera Permission',
+//         message:
+//           'Cool Photo App needs access to your camera ' +
+//           'so you can take awesome pictures.',
+//         buttonNeutral: 'Ask Me Later',
+//         buttonNegative: 'Cancel',
+//         buttonPositive: 'OK',
+//       },
+//     );
+//     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+//       console.log('You can use the camera');
+//     } else {
+//       console.log('Camera permission denied');
+//     }
+//   } catch (err) {
+//     console.warn(err);
+//   }
+// };
 export default function Detail() {
   const navigate = useNavigation();
   useEffect(() => {
@@ -69,7 +140,7 @@ export default function Detail() {
     }
   };
   //added
-
+  const imageUri = item.img;
   return (
     <View style={styles.container}>
       <ImageBackground source={image} style={styles.image}>
@@ -94,6 +165,8 @@ export default function Detail() {
               style={styles.controlBtn}
               onPress={() => {
                 console.log(image);
+                // requestCameraPermission();
+                downloadImage(imageUri);
               }}>
               <FontAwesomeIcon
                 icon={faCircleDown}
@@ -132,27 +205,27 @@ export default function Detail() {
               (elem: {name: string}) => elem.name == item.name,
             ) ? (
               <TouchableOpacity
-                style={[styles.controlBtn, {backgroundColor: '#ffffff'}]}
+                style={[styles.controlBtn, {backgroundColor: '#FA2F4D'}]}
                 onPress={() => {
                   dispatch(addWish(item));
                   console.log(item, 'added to wish');
                 }}>
                 <FontAwesomeIcon
                   icon={faHeart}
-                  style={{color: '#FA2F4D'}}
+                  style={{color: 'white'}}
                   size={30}
                 />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                style={[styles.controlBtn, {backgroundColor: '#FA2F4D'}]}
+                style={[styles.controlBtn, {backgroundColor: '#ffffff'}]}
                 onPress={() => {
                   dispatch(removeWish(item));
                   console.log(item, 'removed from wish');
                 }}>
                 <FontAwesomeIcon
                   icon={faHeart}
-                  style={{color: 'white'}}
+                  style={{color: '#FA2F4D'}}
                   size={30}
                 />
               </TouchableOpacity>

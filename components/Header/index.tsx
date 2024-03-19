@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from 'react-redux';
@@ -8,7 +8,6 @@ import {useSelector} from 'react-redux';
 export default function Header({drawerCurrent}: any) {
   const detailOpen = useSelector(state => state.counter.detailOpen);
   return (
-    // !detailOpen && (
     <View
       style={
         detailOpen ? [styles.container, {display: 'none'}] : [styles.container]
@@ -20,7 +19,6 @@ export default function Header({drawerCurrent}: any) {
       <FontAwesomeIcon icon={faMagnifyingGlass} size={20} color="#7D7A8C" />
     </View>
   );
-  // );
 }
 
 const styles = StyleSheet.create({

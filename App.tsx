@@ -5,7 +5,7 @@
  *
  * @format
  */
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   Button,
   DrawerLayoutAndroid,
@@ -13,39 +13,67 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import Header from './components/Header';
 import Appnavigator from './components/app.navigator';
 import store from './redux/store';
+import {
+  faCircleInfo,
+  faCircleXmark,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 function App(): React.JSX.Element {
   const drawer = useRef<DrawerLayoutAndroid>(null);
-  const [drawerPosition, setDrawerPosition] = useState<'left' | 'right'>(
-    'left',
-  );
+  useEffect(() => {
+    console.log(drawer);
+  }, []);
 
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
-      <Text style={styles.paragraph}>I'm in the Drawer!</Text>
-      <Button
-        title="Close drawer"
-        onPress={() => drawer.current?.closeDrawer()}
-      />
+      <View style={styles.headingTexts}>
+        <Text style={styles.heading}>WallVista</Text>
+        <TouchableOpacity onPress={() => drawer.current?.closeDrawer()}>
+          <FontAwesomeIcon
+            icon={faXmark}
+            style={{color: '#7D7A8C'}}
+            size={25}
+          />
+        </TouchableOpacity>
+      </View>
+      <View>
+        <TouchableOpacity style={styles.btns}>
+          <FontAwesomeIcon
+            icon={faCircleInfo}
+            style={{color: '#7D7A8C', marginRight: 10}}
+            size={25}
+          />
+          <Text style={styles.btnTexts}>About</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btns}>
+          <FontAwesomeIcon
+            icon={faCircleXmark}
+            style={{color: '#7D7A8C', marginRight: 10}}
+            size={25}
+          />
+          <Text style={styles.btnTexts}>Exit App</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
-  const Drawer = createDrawerNavigator();
   return (
     <Provider store={store}>
       <DrawerLayoutAndroid
         ref={drawer}
         drawerWidth={300}
-        drawerPosition={drawerPosition}
+        drawerPosition={'left'}
         renderNavigationView={navigationView}>
         <SafeAreaView style={styles.main}>
           <StatusBar backgroundColor={'white'} hidden={true} />
@@ -106,12 +134,45 @@ const styles = StyleSheet.create({
   //   padding: 16,
   // },
   navigationContainer: {
-    backgroundColor: '#ecf0f1',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
   },
   paragraph: {
     padding: 16,
     fontSize: 15,
     textAlign: 'center',
+    color: 'gray',
+  },
+  heading: {
+    color: 'black',
+    fontWeight: '900',
+    fontSize: 23,
+  },
+  headingTexts: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    width: 300,
+  },
+  btnTexts: {
+    color: '#000000',
+    fontWeight: '500',
+    fontSize: 18,
+  },
+  btns: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: 300,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
 });
 

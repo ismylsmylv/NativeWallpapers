@@ -7,6 +7,7 @@
  */
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  BackHandler,
   Button,
   DrawerLayoutAndroid,
   SafeAreaView,
@@ -62,7 +63,12 @@ function App(): React.JSX.Element {
           />
           <Text style={styles.btnTexts}>About</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btns}>
+        <TouchableOpacity
+          style={styles.btns}
+          onPress={() => {
+            BackHandler.exitApp();
+            drawer.current?.closeDrawer();
+          }}>
           <FontAwesomeIcon
             icon={faCircleXmark}
             style={{color: '#7D7A8C', marginRight: 10}}

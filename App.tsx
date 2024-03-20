@@ -87,17 +87,17 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <DrawerLayoutAndroid
+        {/* <DrawerLayoutAndroid
           ref={drawer}
           drawerWidth={300}
           drawerPosition={'left'}
-          renderNavigationView={navigationView}>
-          <SafeAreaView style={styles.main}>
-            <StatusBar backgroundColor={'white'} hidden={true} />
-            <Header drawerCurrent={drawer.current} />
-            <Appnavigator />
-          </SafeAreaView>
-        </DrawerLayoutAndroid>
+          renderNavigationView={navigationView}> */}
+        <SafeAreaView style={styles.main}>
+          <StatusBar backgroundColor={'white'} hidden={true} />
+          <Header drawerCurrent={drawer.current} />
+          <Appnavigator />
+        </SafeAreaView>
+        {/* </DrawerLayoutAndroid> */}
       </NavigationContainer>
     </Provider>
   );

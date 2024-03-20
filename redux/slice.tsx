@@ -5,15 +5,24 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DrawerLayoutAndroid} from 'react-native-gesture-handler';
 
+// export const getData = async () => {
+//   try {
+//     const jsonValue = await AsyncStorage.getItem('wishlist');
+//     console.log(jsonValue, 'get local');
+//     return jsonValue != null ? JSON.parse(jsonValue) : [];
+//   } catch (e) {}
+// };
 export const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('wishlist');
     console.log(jsonValue, 'get local');
     return jsonValue != null ? JSON.parse(jsonValue) : [];
-  } catch (e) {}
+  } catch (e) {
+    console.error('Error reading local data:', e);
+    return []; // or handle the error accordingly
+  }
 };
-
-export const storeData = async value => {
+export const storeData = async (value: object[]) => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem('wishlist', jsonValue);
@@ -55,7 +64,13 @@ export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
   );
   return response.data;
 });
-
+export const fetchWishlist = createAsyncThunk(
+  'wishlist/fetchWishlist',
+  async () => {
+    const newData = await getData();
+    return newData;
+  },
+);
 export const counterSlice = createSlice({
   name: 'counter',
   initialState,
@@ -129,15 +144,28 @@ export const counterSlice = createSlice({
         elem.category.includes(state.selectedCategory),
       );
     },
+    // getLocal: state => {
+    //   // let newData = [];
+    //   async function readLocal() {
+    //     const newData = await getData();
+    //     console.log(newData, 'slice newdata async');
+    //     return newData;
+    //   }
+    //   state.wishlist = readLocal();
+    //   readLocal();
+    // },
   },
   extraReducers: builder => {
     builder.addCase(fetchWalls.fulfilled, (state, action) => {
       state.wallpapers = action.payload;
       state.wallpapersBack = action.payload;
     });
+    builder.addCase(fetchWishlist.fulfilled, (state, action) => {
+      state.wishlist = action.payload;
+      console.log(state.wishlist, 'extraReducers');
+    });
   },
 });
-
 export const {
   setRoute,
   setItem,
@@ -150,6 +178,7 @@ export const {
   setactiveFilter,
   setselectedCategory,
   setopenCategory,
+  // getLocal,
 } = counterSlice.actions;
 
 export const selectCount = (state: RootState) => state.counter.value;

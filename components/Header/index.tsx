@@ -14,12 +14,13 @@ export default function Header({drawerCurrent}: any) {
         detailOpen ? [styles.container, {display: 'none'}] : [styles.container]
       }>
       <TouchableOpacity
-        onPress={() => {
-          getData();
+        onPress={async () => {
+          const newData = await getData();
+          console.log(newData, 'newdata');
         }}
         // onPress={() => drawerCurrent?.openDrawer()}
       >
-        <FontAwesomeIcon icon={faBars} size={20} color="transparent" />
+        <FontAwesomeIcon icon={faBars} size={20} color="red" />
         {/* #7D7A8C */}
       </TouchableOpacity>
       <Text style={styles.heading}>WallVista</Text>

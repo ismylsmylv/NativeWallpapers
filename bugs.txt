@@ -3,3 +3,6 @@
 3. add to wishlist writes to local storage
 4. removing from wishlist writes to local storage
 5. Download saves to storage
+
+wishlist is stored on local and can be removed again, 
+but when app re-opened, new item overwrites old one, 

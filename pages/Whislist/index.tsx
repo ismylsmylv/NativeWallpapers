@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Appbar from '../../components/Appbar';
 import Cards from '../../components/Cards';
+import {fetchWishlist, getLocal} from '../../redux/slice';
 const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('wishlist');
@@ -24,10 +25,13 @@ const storeData = async value => {
     // saving error
   }
 };
+
 export default function WishlistScreen() {
+  const dispatch = useDispatch();
   useEffect(() => {
     console.log('home mounted');
     // getData();
+    dispatch(fetchWishlist());
   }, []);
   const navigation = useNavigation();
   const wishlist = useSelector(state => state.counter.wishlist);
@@ -40,14 +44,12 @@ export default function WishlistScreen() {
         styles.main,
       ]}>
       <Text>Wishlist</Text>
-      {wishlist && (
-        <Cards
-          style={styles.imageGrid}
-          datas={wishlist}
-          navigation={navigation}
-          placeholder={'wishlist'}
-        />
-      )}
+      <Cards
+        style={styles.imageGrid}
+        datas={wishlist.length > 0 && wishlist}
+        navigation={navigation}
+        placeholder={'wishlist'}
+      />
 
       <Appbar navigation={navigation} />
     </View>

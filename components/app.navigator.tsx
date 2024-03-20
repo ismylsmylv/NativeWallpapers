@@ -7,6 +7,7 @@ import Detail from '../pages/Detail';
 import HomeScreen from '../pages/Home';
 import WishlistScreen from '../pages/Whislist';
 import OpenCategory from '../pages/OpenCategory';
+import About from '../pages/About';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -40,6 +41,7 @@ const Appnavigator = () => {
           component={WishlistScreen}
           options={{headerShown: false}}
         />
+        <Screen name="about" component={About} options={{headerShown: false}} />
       </Navigator>
     </NavigationContainer>
   );

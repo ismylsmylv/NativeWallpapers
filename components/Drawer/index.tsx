@@ -1,64 +1,55 @@
 /* eslint-disable prettier/prettier */
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import {
-  Button,
-  DrawerLayoutAndroid,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import 'react-native-gesture-handler';
-import {Provider} from 'react-redux';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import Header from './components/Header';
-import Appnavigator from './components/app.navigator';
-import store from './redux/store';
-import {
+  faXmark,
   faCircleInfo,
   faCircleXmark,
-  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 
-function App(): React.JSX.Element {
-  const drawer = useRef<DrawerLayoutAndroid>(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    // Check if drawer is initialized and open it after rendering
-    if (drawer.current && !isDrawerOpen) {
-      drawer.current.openDrawer();
-      setIsDrawerOpen(true);
-    }
-  }, [isDrawerOpen]);
-
+export default function navigationView() {
   return (
-    <Provider store={store}>
-      <DrawerLayoutAndroid
-        ref={drawer}
-        drawerWidth={300}
-        drawerPosition={'left'}
-        renderNavigationView={navigationView}>
-        <SafeAreaView style={styles.main}>
-          <StatusBar backgroundColor={'white'} hidden={true} />
-          <Header drawerCurrent={drawer.current} />
-          <Appnavigator />
-        </SafeAreaView>
-      </DrawerLayoutAndroid>
-    </Provider>
+    <View style={[styles.container, styles.navigationContainer]}>
+      <View style={styles.headingTexts}>
+        <Text style={styles.heading}>WallVista</Text>
+        <TouchableOpacity onPress={() => drawer.current?.closeDrawer()}>
+          <FontAwesomeIcon
+            icon={faXmark}
+            style={{color: '#7D7A8C'}}
+            size={25}
+          />
+        </TouchableOpacity>
+      </View>
+      <NavigationContainer>
+        <View>
+          <TouchableOpacity
+            style={styles.btns}
+            onPress={() => {
+              navigation.navigate('detail');
+            }}>
+            <FontAwesomeIcon
+              icon={faCircleInfo}
+              style={{color: '#7D7A8C', marginRight: 10}}
+              size={25}
+            />
+            <Text style={styles.btnTexts}>About</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.btns}>
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              style={{color: '#7D7A8C', marginRight: 10}}
+              size={25}
+            />
+            <Text style={styles.btnTexts}>Exit App</Text>
+          </TouchableOpacity>
+        </View>
+      </NavigationContainer>
+    </View>
   );
 }
+
 const styles = StyleSheet.create({
   imageGrid: {
     marginTop: 20,
@@ -140,5 +131,3 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 });
-
-export default App;

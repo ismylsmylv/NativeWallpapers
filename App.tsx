@@ -29,6 +29,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
 
 function App(): React.JSX.Element {
   const drawer = useRef<DrawerLayoutAndroid>(null);

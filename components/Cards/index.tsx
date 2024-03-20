@@ -14,30 +14,12 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {
   fetchWalls,
-  getLocal,
   setDetailOpen,
   setItem,
   setopenCategory,
 } from '../../redux/slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const storeData = async value => {
-  try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem('wishlist', jsonValue);
-  } catch (e) {
-    // saving error
-  }
-};
-const getData = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem('wishlist');
-    console.log(jsonValue, 'get local');
-    return jsonValue != null ? JSON.parse(jsonValue) : [];
-  } catch (e) {
-    // error reading value
-  }
-};
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
 
@@ -55,7 +37,6 @@ export default function Cards({datas, navigation, placeholder}: any) {
 
   useEffect(() => {
     dispatch(setopenCategory(selectedCategory));
-    getLocal();
     console.log(datas, 'from cards');
   }, []);
 
@@ -133,22 +114,11 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
 
     elevation: 7,
-    // backgroundColor: 'red',
   },
-  // imageGrid: {
-  //   marginTop: 20,
-  //   marginBottom: 150,
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   flexWrap: 'wrap',
-  //   gap: 20,
-  // },
+
   flatContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    // gap: 10,
     alignItems: 'flex-start',
     flexGrow: 0,
     width: windowWidth,
@@ -160,7 +130,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 40,
     marginTop: -60,
-    // backgroundColor: 'blue',
     height: 100,
     width: 300,
     zIndex: 0,

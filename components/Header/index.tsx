@@ -4,6 +4,7 @@ import React, {useRef} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from 'react-redux';
+import {getData} from '../../redux/slice';
 
 export default function Header({drawerCurrent}: any) {
   const detailOpen = useSelector(state => state.counter.detailOpen);
@@ -13,7 +14,10 @@ export default function Header({drawerCurrent}: any) {
         detailOpen ? [styles.container, {display: 'none'}] : [styles.container]
       }>
       <TouchableOpacity
-      // onPress={() => drawerCurrent?.openDrawer()}
+        onPress={() => {
+          getData();
+        }}
+        // onPress={() => drawerCurrent?.openDrawer()}
       >
         <FontAwesomeIcon icon={faBars} size={20} color="transparent" />
         {/* #7D7A8C */}

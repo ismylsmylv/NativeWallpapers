@@ -1,17 +1,15 @@
 /* eslint-disable prettier/prettier */
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Appbar from '../../components/Appbar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Cards from '../../components/Cards';
-import {getLocal} from '../../redux/slice';
-let jsonValue;
 const getData = async () => {
   try {
-    jsonValue = await AsyncStorage.getItem('wishlist');
+    const jsonValue = await AsyncStorage.getItem('wishlist');
     console.log(jsonValue, 'get local');
     return jsonValue != null ? JSON.parse(jsonValue) : [];
   } catch (e) {
@@ -27,19 +25,9 @@ const storeData = async value => {
   }
 };
 export default function WishlistScreen() {
-  const dispatch = useDispatch();
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('wishlist');
-      console.log(jsonValue, 'get local');
-      return jsonValue != null ? JSON.parse(jsonValue) : [];
-    } catch (e) {
-      // error reading value
-    }
-  };
   useEffect(() => {
     console.log('home mounted');
-    getData();
+    // getData();
   }, []);
   const navigation = useNavigation();
   const wishlist = useSelector(state => state.counter.wishlist);
@@ -52,12 +40,15 @@ export default function WishlistScreen() {
         styles.main,
       ]}>
       <Text>Wishlist</Text>
-      <Cards
-        style={styles.imageGrid}
-        datas={wishlist}
-        navigation={navigation}
-        placeholder={'wishlist'}
-      />
+      {wishlist && (
+        <Cards
+          style={styles.imageGrid}
+          datas={wishlist}
+          navigation={navigation}
+          placeholder={'wishlist'}
+        />
+      )}
+
       <Appbar navigation={navigation} />
     </View>
   );

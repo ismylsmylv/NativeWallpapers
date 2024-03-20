@@ -16,19 +16,12 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  addWish,
-  getLocal,
-  removeWish,
-  setDetailOpen,
-  setLocal,
-} from '../../redux/slice';
+import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
 // @ts-ignore
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
 
@@ -63,37 +56,14 @@ const downloadImage = async (imageUri: string) => {
   }
 };
 
-//     const granted = await PermissionsAndroid.request(
-//       PermissionsAndroid.PERMISSIONS.CAMERA,
-//       {
-//         title: 'Cool Photo App Camera Permission',
-//         message:
-//           'Cool Photo App needs access to your camera ' +
-//           'so you can take awesome pictures.',
-//         buttonNeutral: 'Ask Me Later',
-//         buttonNegative: 'Cancel',
-//         buttonPositive: 'OK',
-//       },
-//     );
-//     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-//       console.log('You can use the camera');
-//     } else {
-//       console.log('Camera permission denied');
-//     }
-//   } catch (err) {
-//     console.warn(err);
-//   }
-// };
 export default function Detail() {
   const navigate = useNavigation();
   useEffect(() => {
     const backAction = () => {
       console.log('true');
       dispatch(setDetailOpen(false));
-
       return false;
     };
-    getLocal();
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,

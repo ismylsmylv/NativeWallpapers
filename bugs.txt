@@ -1,0 +1,5 @@
+1. wishlist writes to local storage
+2. wishlist reades from local storage
+3. add to wishlist writes to local storage
+4. removing from wishlist writes to local storage
+5. Download saves to storage

@@ -5,7 +5,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DrawerLayoutAndroid} from 'react-native-gesture-handler';
 
-const getData = async () => {
+export const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('wishlist');
     console.log(jsonValue, 'get local');
@@ -13,10 +13,11 @@ const getData = async () => {
   } catch (e) {}
 };
 
-const storeData = async value => {
+export const storeData = async value => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem('wishlist', jsonValue);
+    console.log(jsonValue, 'stored');
   } catch (e) {}
 };
 
@@ -128,20 +129,6 @@ export const counterSlice = createSlice({
         elem.category.includes(state.selectedCategory),
       );
     },
-    setLocal: (state, action: PayloadAction<object>) => {
-      storeData(action.payload);
-      console.log(JSON.stringify(state.wishlist), 'set to local');
-    },
-    getLocal: state => {
-      const getData = async () => {
-        try {
-          const jsonValue = await AsyncStorage.getItem('wishlist');
-          console.log(jsonValue, 'get local');
-          return (state.local = jsonValue != null ? JSON.parse(jsonValue) : []);
-        } catch (e) {}
-      };
-      getData();
-    },
   },
   extraReducers: builder => {
     builder.addCase(fetchWalls.fulfilled, (state, action) => {
@@ -163,8 +150,6 @@ export const {
   setactiveFilter,
   setselectedCategory,
   setopenCategory,
-  setLocal,
-  getLocal,
 } = counterSlice.actions;
 
 export const selectCount = (state: RootState) => state.counter.value;

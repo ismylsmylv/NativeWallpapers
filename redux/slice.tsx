@@ -3,26 +3,23 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '@reduxjs/toolkit/query';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useRef} from 'react';
 import {DrawerLayoutAndroid} from 'react-native-gesture-handler';
+
 const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('wishlist');
     console.log(jsonValue, 'get local');
     return jsonValue != null ? JSON.parse(jsonValue) : [];
-  } catch (e) {
-    // error reading value
-  }
+  } catch (e) {}
 };
+
 const storeData = async value => {
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem('wishlist', jsonValue);
-  } catch (e) {
-    // saving error
-  }
+  } catch (e) {}
 };
-// Define a type for the slice state
+
 interface CounterState {
   value: number;
   wallpapers: object[];
@@ -34,9 +31,9 @@ interface CounterState {
   activeFilter: string;
   selectedCategory: string;
   openCategory: object[];
+  local: object[];
 }
 
-// Define the initial state using that type
 const initialState: CounterState = {
   value: 0,
   wallpapers: [],
@@ -48,32 +45,33 @@ const initialState: CounterState = {
   activeFilter: 'for you',
   selectedCategory: '',
   openCategory: [],
+  local: [],
 };
+
 export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
   const response = await axios.get(
     'https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers',
   );
   return response.data;
 });
+
 export const counterSlice = createSlice({
   name: 'counter',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
     setRoute: (state, action: PayloadAction<string>) => {
       state.route = action.payload;
     },
-
     setItem: (state, action: PayloadAction<object>) => {
       state.openItem = action.payload;
     },
     setDetailOpen: (state, action: PayloadAction<boolean>) => {
       state.detailOpen = action.payload;
     },
-    addWish: (state, action: PayloadAction<boolean | any>) => {
+    addWish: (state, action: PayloadAction<any>) => {
       state.wishlist = [...state.wishlist, action.payload];
-      console.log(state.wishlist, 'added');
-      //change wall data
+      storeData(state.wishlist);
+      console.log(state.wishlist, 'stored to locale');
       const updatedLikes = action.payload.like + 1;
       const obj = {
         name: action.payload.name,
@@ -88,15 +86,11 @@ export const counterSlice = createSlice({
           action.payload.id,
         obj,
       );
-      //change user data
-      //axios
     },
-    removeWish: (state, action: PayloadAction<object | any>) => {
-      state.wishlist = state.wishlist.filter(elem => {
-        elem.name != action.payload.name;
-      });
-      //change wall data
-
+    removeWish: (state, action: PayloadAction<any>) => {
+      state.wishlist = state.wishlist.filter(
+        elem => elem.name !== action.payload.name,
+      );
       const updatedLikes = action.payload.like - 1;
       const obj = {
         name: action.payload.name,
@@ -112,14 +106,12 @@ export const counterSlice = createSlice({
         obj,
       );
       console.log(state.wishlist, 'removed');
-      //change user data
-      //axios
+      storeData(state.wishlist);
     },
     filterForYou: state => {
       state.wallpapers = state.wallpapersBack;
     },
     filterPopular: state => {
-      // state.wallpapers = state.wallpapers.filter(elem=>);
       state.wallpapers.sort((a: any, b: any) => b.like - a.like);
     },
     filterTrending: state => {
@@ -132,18 +124,27 @@ export const counterSlice = createSlice({
       state.selectedCategory = action.payload;
     },
     setopenCategory: state => {
-      state.openCategory = state.wallpapers.filter(elem => {
-        return elem.category.includes(state.selectedCategory);
-      });
-      // console.log(state.selectedCategory, 'selected from slice');
-      // console.log(JSON.stringify(state.openCategory), 'stringed from slice');
+      state.openCategory = state.wallpapers.filter(elem =>
+        elem.category.includes(state.selectedCategory),
+      );
+    },
+    setLocal: (state, action: PayloadAction<object>) => {
+      storeData(action.payload);
+      console.log(JSON.stringify(state.wishlist), 'set to local');
+    },
+    getLocal: state => {
+      const getData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem('wishlist');
+          console.log(jsonValue, 'get local');
+          return (state.local = jsonValue != null ? JSON.parse(jsonValue) : []);
+        } catch (e) {}
+      };
+      getData();
     },
   },
   extraReducers: builder => {
-    // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchWalls.fulfilled, (state, action) => {
-      // Add user to the state array
-
       state.wallpapers = action.payload;
       state.wallpapersBack = action.payload;
     });
@@ -162,8 +163,10 @@ export const {
   setactiveFilter,
   setselectedCategory,
   setopenCategory,
+  setLocal,
+  getLocal,
 } = counterSlice.actions;
-// Other code such as selectors can use the imported `RootState` type
+
 export const selectCount = (state: RootState) => state.counter.value;
 
 export default counterSlice.reducer;

@@ -1,27 +1,43 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import {
+  Dimensions,
   FlatList,
   Image,
   ImageBackground,
   RefreshControl,
-  ScrollView,
   StyleSheet,
-  Touchable,
+  Text,
   TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import {Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   fetchWalls,
+  getLocal,
   setDetailOpen,
   setItem,
   setopenCategory,
 } from '../../redux/slice';
-import {Dimensions} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async value => {
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem('wishlist', jsonValue);
+  } catch (e) {
+    // saving error
+  }
+};
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('wishlist');
+    console.log(jsonValue, 'get local');
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (e) {
+    // error reading value
+  }
+};
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
 
@@ -39,7 +55,7 @@ export default function Cards({datas, navigation, placeholder}: any) {
 
   useEffect(() => {
     dispatch(setopenCategory(selectedCategory));
-
+    getLocal();
     console.log(datas, 'from cards');
   }, []);
 

@@ -16,7 +16,13 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {addWish, removeWish, setDetailOpen} from '../../redux/slice';
+import {
+  addWish,
+  getLocal,
+  removeWish,
+  setDetailOpen,
+  setLocal,
+} from '../../redux/slice';
 // @ts-ignore
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
@@ -84,9 +90,10 @@ export default function Detail() {
     const backAction = () => {
       console.log('true');
       dispatch(setDetailOpen(false));
+
       return false;
     };
-
+    getLocal();
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       backAction,
@@ -195,15 +202,7 @@ export default function Detail() {
                 style={[styles.controlBtn, {backgroundColor: '#FA2F4D'}]}
                 onPress={() => {
                   dispatch(addWish(item));
-                  const storeData = async value => {
-                    try {
-                      const jsonValue = JSON.stringify(value);
-                      await AsyncStorage.setItem('my-key', jsonValue);
-                    } catch (e) {
-                      // saving error
-                    }
-                  };
-                  storeData(item);
+                  // setLocal(item);
                   console.log(item, 'added to wish');
                 }}>
                 <FontAwesomeIcon

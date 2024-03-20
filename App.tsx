@@ -5,10 +5,15 @@
  *
  * @format
  */
+import {
+  faCircleInfo,
+  faCircleXmark,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect, useRef, useState} from 'react';
 import {
   BackHandler,
-  Button,
   DrawerLayoutAndroid,
   SafeAreaView,
   StatusBar,
@@ -19,17 +24,12 @@ import {
 } from 'react-native';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import Header from './components/Header';
 import Appnavigator from './components/app.navigator';
 import store from './redux/store';
-import {
-  faCircleInfo,
-  faCircleXmark,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import Drawer from './components/Drawer';
+import {setDrawer} from './redux/slice';
 
 function App(): React.JSX.Element {
   const drawer = useRef<DrawerLayoutAndroid>(null);
@@ -42,7 +42,6 @@ function App(): React.JSX.Element {
       setIsDrawerOpen(true);
     }
   }, [isDrawerOpen]);
-
   const navigationView = () => (
     <View style={[styles.container, styles.navigationContainer]}>
       <View style={styles.headingTexts}>
@@ -56,7 +55,11 @@ function App(): React.JSX.Element {
         </TouchableOpacity>
       </View>
       <View>
-        <TouchableOpacity style={styles.btns}>
+        <TouchableOpacity
+          style={styles.btns}
+          onPress={() => {
+            console.log('about');
+          }}>
           <FontAwesomeIcon
             icon={faCircleInfo}
             style={{color: '#7D7A8C', marginRight: 10}}
@@ -83,17 +86,19 @@ function App(): React.JSX.Element {
 
   return (
     <Provider store={store}>
-      <DrawerLayoutAndroid
-        ref={drawer}
-        drawerWidth={300}
-        drawerPosition={'left'}
-        renderNavigationView={navigationView}>
-        <SafeAreaView style={styles.main}>
-          <StatusBar backgroundColor={'white'} hidden={true} />
-          <Header drawerCurrent={drawer.current} />
-          <Appnavigator />
-        </SafeAreaView>
-      </DrawerLayoutAndroid>
+      <NavigationContainer>
+        <DrawerLayoutAndroid
+          ref={drawer}
+          drawerWidth={300}
+          drawerPosition={'left'}
+          renderNavigationView={navigationView}>
+          <SafeAreaView style={styles.main}>
+            <StatusBar backgroundColor={'white'} hidden={true} />
+            <Header drawerCurrent={drawer.current} />
+            <Appnavigator />
+          </SafeAreaView>
+        </DrawerLayoutAndroid>
+      </NavigationContainer>
     </Provider>
   );
 }

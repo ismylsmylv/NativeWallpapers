@@ -3,6 +3,8 @@ import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '@reduxjs/toolkit/query';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRef} from 'react';
+import {DrawerLayoutAndroid} from 'react-native-gesture-handler';
 const getData = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem('wishlist');

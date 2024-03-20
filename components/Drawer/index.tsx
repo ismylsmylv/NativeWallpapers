@@ -1,15 +1,19 @@
 /* eslint-disable prettier/prettier */
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   faXmark,
   faCircleInfo,
   faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {DrawerLayoutAndroid} from 'react-native-gesture-handler';
 
-export default function navigationView() {
+function Drawer() {
+  const navigation = useNavigation();
+  const drawer = useRef<DrawerLayoutAndroid>(null);
+
   return (
     <View style={[styles.container, styles.navigationContainer]}>
       <View style={styles.headingTexts}>
@@ -131,3 +135,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 });
+
+export default Drawer;

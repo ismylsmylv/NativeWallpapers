@@ -16,7 +16,7 @@ export default function Header({drawerCurrent}: any) {
         <FontAwesomeIcon icon={faBars} size={20} color="#7D7A8C" />
       </TouchableOpacity>
       <Text style={styles.heading}>WallVista</Text>
-      <FontAwesomeIcon icon={faMagnifyingGlass} size={20} color="#7D7A8C" />
+      <FontAwesomeIcon icon={faMagnifyingGlass} size={20} color="transparent" />
     </View>
   );
 }

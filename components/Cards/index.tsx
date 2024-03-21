@@ -20,10 +20,10 @@ import {
   setopenCategory,
 } from '../../redux/slice';
 const colorScheme = Appearance.getColorScheme();
-const ImageItem = ({img, item}: any) => {
-  console.log(item, 'as item image');
+const ImageItem = ({img}: any) => {
+  // console.log(item, 'as item image');
 
-  const image = {uri: img};
+  const image = {uri: img + '?auto=compress&cs=tinysrgb&w=600'};
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.image}>
       {/* <Text>{item.title} example</Text> */}
@@ -31,7 +31,6 @@ const ImageItem = ({img, item}: any) => {
   );
 };
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
@@ -40,10 +39,10 @@ export default function Cards({datas, navigation, placeholder}: any) {
 
   useEffect(() => {
     dispatch(setopenCategory(selectedCategory));
-    console.log(datas, 'from cards');
+    // console.log(datas, 'from cards');
   }, []);
 
-  console.log(datas);
+  // console.log(datas);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {},
   placeholder: {
-    color: 'red',
+    color: 'transparent',
     flex: 1,
     fontSize: 40,
     marginTop: -60,

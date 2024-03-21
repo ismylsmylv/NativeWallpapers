@@ -8,7 +8,10 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
+  Appearance,
   BackHandler,
+  Dimensions,
   ImageBackground,
   Platform,
   StyleSheet,
@@ -24,7 +27,8 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
-
+const colorScheme = Appearance.getColorScheme();
+const windowWidth = Dimensions.get('window').width;
 // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
 
 const downloadImage = async (imageUri: string) => {
@@ -149,6 +153,7 @@ export default function Detail() {
   const imageUri = item.img;
   return (
     <View style={styles.container}>
+      <ActivityIndicator style={styles.loader} size="large" />
       <ImageBackground source={image} style={styles.image}>
         <View style={styles.controlsContainer}>
           <View style={styles.upperControlsContainer}>
@@ -253,7 +258,15 @@ export default function Detail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
+    position: 'relative',
+  },
+  loader: {
+    position: 'absolute',
+    zIndex: 0,
+    top: '50%',
+    left: windowWidth / 2 - 18,
+    marginLeft: 'auto',
   },
   image: {
     flex: 1,

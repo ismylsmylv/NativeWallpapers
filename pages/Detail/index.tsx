@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import {
   faChevronLeft,
@@ -28,6 +29,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 
 const downloadImage = async (imageUri: string) => {
   try {
+    ToastAndroid.show('Downloading image, please wait.', ToastAndroid.SHORT);
     const folderPath = `${RNFetchBlob.fs.dirs.PictureDir}/WallVista`;
     console.log(imageUri, 'imageUri');
     const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
@@ -70,11 +72,11 @@ const downloadImage = async (imageUri: string) => {
       appendExt: 'png',
       indicator: true,
       IOSBackgroundTask: true,
-      path: path,
+      path: path as string,
       addAndroidDownloads: {
         useDownloadManager: true,
         notification: true,
-        path: path,
+        path: path as string,
         description: 'Image',
       },
     })
@@ -82,7 +84,7 @@ const downloadImage = async (imageUri: string) => {
       .then(res => {
         console.log(res, 'end downloaded');
         ToastAndroid.show(
-          'Image downloaded to Pictures folder successfully!',
+          'Image saved to Pictures folder successfully!',
           ToastAndroid.SHORT,
         );
       });

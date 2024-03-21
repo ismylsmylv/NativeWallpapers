@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '@reduxjs/toolkit/query';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {DrawerLayoutAndroid} from 'react-native-gesture-handler';
 
 // export const getData = async () => {
 //   try {
@@ -105,7 +104,7 @@ export const counterSlice = createSlice({
     },
     removeWish: (state, action: PayloadAction<any>) => {
       state.wishlist = state.wishlist.filter(
-        elem => elem.name !== action.payload.name,
+        (elem: any) => elem.name !== action.payload.name,
       );
       const updatedLikes = action.payload.like - 1;
       const obj = {
@@ -140,7 +139,7 @@ export const counterSlice = createSlice({
       state.selectedCategory = action.payload;
     },
     setopenCategory: state => {
-      state.openCategory = state.wallpapers.filter(elem =>
+      state.openCategory = state.wallpapers.filter((elem: any) =>
         elem.category.includes(state.selectedCategory),
       );
     },

@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {useRef} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBars, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {getData} from '../../redux/slice';
 
-export default function Header({drawerCurrent}: any) {
-  const detailOpen = useSelector(state => state.counter.detailOpen);
+export default function Header() {
+  const detailOpen = useSelector((state: any) => state.counter.detailOpen);
   return (
     <View
       style={

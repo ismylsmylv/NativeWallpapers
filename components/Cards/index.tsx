@@ -18,7 +18,6 @@ import {
   setItem,
   setopenCategory,
 } from '../../redux/slice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
@@ -33,7 +32,9 @@ const ImageItem = ({img, item}: any) => {
 const windowWidth = Dimensions.get('window').width;
 export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
-  const selectedCategory = useSelector(state => state.counter.selectedCategory);
+  const selectedCategory = useSelector(
+    (state: any) => state.counter.selectedCategory,
+  );
 
   useEffect(() => {
     dispatch(setopenCategory(selectedCategory));
@@ -46,7 +47,7 @@ export default function Cards({datas, navigation, placeholder}: any) {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      dispatch(fetchWalls());
+      dispatch(fetchWalls() as any);
       setRefreshing(false);
     }, 1000);
   }, []);

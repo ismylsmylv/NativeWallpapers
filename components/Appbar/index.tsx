@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setRoute} from '../../redux/slice';
 
 export default function Appbar({navigation}: any) {
-  const route = useSelector(state => state.counter.route);
+  const route = useSelector((state: any) => state.counter.route);
   const dispatch = useDispatch();
   return (
     <View style={[styles.container]}>

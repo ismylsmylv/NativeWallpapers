@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Text, View} from 'react-native';
 
 export default function About() {
   return (
@@ -10,4 +10,4 @@ export default function About() {
   );
 }
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});

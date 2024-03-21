@@ -72,8 +72,8 @@ export default function Detail() {
     return () => backHandler.remove();
   }, []);
 
-  const item = useSelector(state => state.counter.openItem);
-  const wishlist = useSelector(state => state.counter.wishlist);
+  const item = useSelector((state: any) => state.counter.openItem);
+  const wishlist = useSelector((state: any) => state.counter.wishlist);
   const dispatch = useDispatch();
   const image = {uri: item.img};
   const [wallpaperSet, setwallpaperSet] = useState(false);

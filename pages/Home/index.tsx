@@ -1,13 +1,12 @@
 /* eslint-disable prettier/prettier */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Appbar from '../../components/Appbar';
 import Cards from '../../components/Cards';
 import Filters from '../../components/Filters';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {fetchWalls} from '../../redux/slice';
-import {Text} from 'react-native-svg';
 
 export default function HomeScreen() {
   // const [datas, setdatas] = useState([]);

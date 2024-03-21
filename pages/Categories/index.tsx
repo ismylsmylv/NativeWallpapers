@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {
   Image,
@@ -6,13 +7,10 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
-  View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import Appbar from '../../components/Appbar';
 import {useDispatch} from 'react-redux';
+import Appbar from '../../components/Appbar';
 import {setselectedCategory} from '../../redux/slice';
 const categories = [
   {

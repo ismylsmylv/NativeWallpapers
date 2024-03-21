@@ -1,40 +1,39 @@
 /* eslint-disable prettier/prettier */
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import Appbar from '../../components/Appbar';
 import Cards from '../../components/Cards';
-import {fetchWishlist, getLocal} from '../../redux/slice';
-const getData = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem('wishlist');
-    console.log(jsonValue, 'get local');
-    return jsonValue != null ? JSON.parse(jsonValue) : [];
-  } catch (e) {
-    // error reading value
-  }
-};
-const storeData = async value => {
-  try {
-    const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem('wishlist', jsonValue);
-  } catch (e) {
-    // saving error
-  }
-};
+import {fetchWishlist} from '../../redux/slice';
+// const getData = async () => {
+//   try {
+//     const jsonValue = await AsyncStorage.getItem('wishlist');
+//     console.log(jsonValue, 'get local');
+//     return jsonValue != null ? JSON.parse(jsonValue) : [];
+//   } catch (e) {
+//     // error reading value
+//   }
+// };
+// const storeData = async value => {
+//   try {
+//     const jsonValue = JSON.stringify(value);
+//     await AsyncStorage.setItem('wishlist', jsonValue);
+//   } catch (e) {
+//     // saving error
+//   }
+// };
 
 export default function WishlistScreen() {
   const dispatch = useDispatch();
   useEffect(() => {
     console.log('home mounted');
     // getData();
-    dispatch(fetchWishlist());
+    dispatch(fetchWishlist() as any);
   }, []);
   const navigation = useNavigation();
-  const wishlist = useSelector(state => state.counter.wishlist);
+  const wishlist = useSelector((state: any) => state.counter.wishlist);
   // const wishlist = jsonValue;
   // const dispatch = useDispatch();
   return (

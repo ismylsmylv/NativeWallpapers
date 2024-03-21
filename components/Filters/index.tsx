@@ -13,7 +13,7 @@ export default function Filters() {
   // const count = useAppSelector(state => state.counter.value);
   // let count;
   const dispatch = useDispatch();
-  const activeFilter = useSelector(state => state.counter.activeFilter);
+  const activeFilter = useSelector((state: any) => state.counter.activeFilter);
   return (
     <View style={styles.container}>
       <TouchableOpacity

@@ -1,8 +1,5 @@
-1. wishlist writes to local storage
-2. wishlist reades from local storage
-3. add to wishlist writes to local storage
-4. removing from wishlist writes to local storage
-5. Download saves to storage
-
-wishlist is stored on local and can be removed again, 
-but when app re-opened, new item overwrites old one, 
+1. Download saves to storage
+2. Dark/light mode
+3. Loading state on home
+4. Setting wallpaper works actually
+5. Setting asks which wallpaper to change

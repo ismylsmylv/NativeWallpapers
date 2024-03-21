@@ -9,6 +9,7 @@ import React, {useEffect, useState} from 'react';
 import {
   BackHandler,
   ImageBackground,
+  Platform,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -28,24 +29,63 @@ import RNFetchBlob from 'rn-fetch-blob';
 const downloadImage = async (imageUri: string) => {
   try {
     const folderPath = `${RNFetchBlob.fs.dirs.PictureDir}/WallVista`;
-
+    console.log(imageUri, 'imageUri');
     const filename = imageUri.substring(imageUri.lastIndexOf('/') + 1);
-    const path = `${folderPath}/${filename}`;
+    // const path = `${folderPath}/${filename}`;
 
     // Check if the image file already exists
-    const exists = await RNFetchBlob.fs.exists(path);
-    if (exists) {
-      ToastAndroid.show('Image already downloaded!', ToastAndroid.SHORT);
-      return; // Exit early if the image is already downloaded
-    }
+    // const exists = await RNFetchBlob.fs.exists(path);
+    console.log(folderPath, 'folderpath');
+    console.log(filename, 'filename');
+    // console.log(path, 'path');
+    // console.log(exists, 'exists');
+    // if (exists) {
+    //   ToastAndroid.show('Image already downloaded!', ToastAndroid.SHORT);
+    //   return; // Exit early if the image is already downloaded
+    // }
 
-    // Attempt to fetch the image
-    const res = await RNFetchBlob.config({
+    // // Attempt to fetch the image
+    // const response = await RNFetchBlob.config({
+    //   fileCache: true,
+    //   appendExt: 'jpg',
+    //   path: path,
+    // }).fetch('GET', imageUri);
+    // response.close();
+
+    // // Ensure response is closed after use
+
+    // ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
+    //stackoverflow
+
+    let imgUrl = imageUri;
+
+    let newImgUri = imgUrl.lastIndexOf('/');
+    let imageName = imgUrl.substring(newImgUri);
+
+    let dirs = RNFetchBlob.fs.dirs;
+    let path = Platform.OS == 'android' && dirs.PictureDir + imageName;
+
+    RNFetchBlob.config({
       fileCache: true,
-      appendExt: 'jpg',
+      appendExt: 'png',
+      indicator: true,
+      IOSBackgroundTask: true,
       path: path,
-    }).fetch('GET', imageUri);
-    ToastAndroid.show('Image downloaded successfully!', ToastAndroid.SHORT);
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        path: path,
+        description: 'Image',
+      },
+    })
+      .fetch('GET', imgUrl)
+      .then(res => {
+        console.log(res, 'end downloaded');
+        ToastAndroid.show(
+          'Image downloaded to Pictures folder successfully!',
+          ToastAndroid.SHORT,
+        );
+      });
   } catch (error) {
     // Handle any errors that occur during the process
     console.error('Error downloading image:', error);
@@ -127,10 +167,16 @@ export default function Detail() {
           <View style={styles.controls}>
             <TouchableOpacity
               style={styles.controlBtn}
-              onPress={() => {
+              onPress={async () => {
                 console.log(image);
                 // requestCameraPermission();
-                downloadImage(imageUri);
+                try {
+                  await downloadImage(imageUri);
+                } catch (error) {
+                  console.error('Error downloading image:', error);
+                }
+
+                // downloadImage(imageUri);
               }}>
               <FontAwesomeIcon
                 icon={faCircleDown}

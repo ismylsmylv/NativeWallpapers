@@ -4,7 +4,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSelector} from 'react-redux';
-import {getData} from '../../redux/slice';
 
 export default function Header() {
   const detailOpen = useSelector((state: any) => state.counter.detailOpen);
@@ -14,13 +13,13 @@ export default function Header() {
         detailOpen ? [styles.container, {display: 'none'}] : [styles.container]
       }>
       <TouchableOpacity
-        onPress={async () => {
-          const newData = await getData();
-          console.log(newData, 'newdata');
-        }}
-        // onPress={() => drawerCurrent?.openDrawer()}
+      // onPress={async () => {
+      //   const newData = await getData();
+      //   console.log(newData, 'newdata');
+      // }}
+      // onPress={() => drawerCurrent?.openDrawer()}
       >
-        <FontAwesomeIcon icon={faBars} size={20} color="red" />
+        <FontAwesomeIcon icon={faBars} size={20} color="transparent" />
         {/* #7D7A8C */}
       </TouchableOpacity>
       <Text style={styles.heading}>WallVista</Text>

@@ -22,7 +22,7 @@ export default function Header() {
         <FontAwesomeIcon icon={faBars} size={20} color="transparent" />
         {/* #7D7A8C */}
       </TouchableOpacity>
-      <Text style={styles.heading}>WallVista</Text>
+      <Text style={styles.heading}>Waller</Text>
       <FontAwesomeIcon icon={faMagnifyingGlass} size={20} color="transparent" />
     </View>
   );
@@ -41,5 +41,7 @@ const styles = StyleSheet.create({
     color: '#1B1738',
     fontWeight: '600',
     fontSize: 23,
+    textTransform: 'uppercase',
+    fontFamily: 'Orbitron-ExtraBold',
   },
 });

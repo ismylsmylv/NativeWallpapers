@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     color: '#C7C7CE',
     width: '100%',
+    fontFamily: 'Poppins-Medium',
   },
   container: {
     display: 'flex',

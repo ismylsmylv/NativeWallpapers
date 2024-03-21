@@ -132,8 +132,9 @@ const styles = StyleSheet.create({
     color: 'white',
     zIndex: 10,
     fontSize: 30,
-    fontWeight: '800',
+    // fontWeight: '800',
     padding: 10,
+    fontFamily: 'Poppins-Medium',
   },
   backgroundImage: {
     position: 'absolute',

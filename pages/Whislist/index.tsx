@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Appearance, StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import Appbar from '../../components/Appbar';
 import Cards from '../../components/Cards';
 import {fetchWishlist} from '../../redux/slice';
+const colorScheme = Appearance.getColorScheme();
+
 // const getData = async () => {
 //   try {
 //     const jsonValue = await AsyncStorage.getItem('wishlist');
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    backgroundColor: 'white',
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
     overflow: 'scroll',
   },
 });

@@ -4,10 +4,11 @@
 import {faBorderAll, faHeart, faHouse} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Appearance, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
 import {setRoute} from '../../redux/slice';
+const colorScheme = Appearance.getColorScheme();
 
 export default function Appbar({navigation}: any) {
   const route = useSelector((state: any) => state.counter.route);
@@ -68,7 +69,6 @@ const styles = StyleSheet.create({
     width: '100%',
     bottom: 0,
     position: 'absolute',
-    backgroundColor: 'white',
     alignSelf: 'flex-end',
     shadowColor: '#000000',
     shadowOffset: {
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.17,
     shadowRadius: 2.54,
     elevation: 30,
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
   },
   icon: {
     height: 30,

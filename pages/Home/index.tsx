@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Appearance, StyleSheet, View} from 'react-native';
 import Appbar from '../../components/Appbar';
 import Cards from '../../components/Cards';
 import Filters from '../../components/Filters';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {fetchWalls} from '../../redux/slice';
+const colorScheme = Appearance.getColorScheme();
 
 export default function HomeScreen() {
   // const [datas, setdatas] = useState([]);
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   main: {
-    backgroundColor: 'white',
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
     overflow: 'scroll',
   },
 });

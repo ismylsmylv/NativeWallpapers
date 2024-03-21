@@ -2,16 +2,20 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {
+  Appearance,
   Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import Appbar from '../../components/Appbar';
 import {setselectedCategory} from '../../redux/slice';
+const colorScheme = Appearance.getColorScheme();
+
 const categories = [
   {
     title: 'Nature',
@@ -77,6 +81,7 @@ function CategoryScreen() {
             //   <Text style={styles.catName}>{elem.title}</Text>
             // </ImageBackground>
             <TouchableOpacity
+              activeOpacity={0.9}
               onPress={() => {
                 console.log(elem.title, 'clicked');
                 dispatch(setselectedCategory(elem.title));
@@ -114,6 +119,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
   },
   catCard: {
     backgroundColor: '#FF304F',

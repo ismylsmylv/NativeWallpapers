@@ -2,8 +2,15 @@
 import {faBars, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Appearance,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useSelector} from 'react-redux';
+const colorScheme = Appearance.getColorScheme();
 
 export default function Header() {
   const detailOpen = useSelector((state: any) => state.counter.detailOpen);
@@ -36,9 +43,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 25,
     paddingVertical: 20,
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
   },
   heading: {
-    color: '#1B1738',
+    color: colorScheme === 'dark' ? 'white' : '#1B1738',
     fontWeight: '600',
     fontSize: 23,
     textTransform: 'uppercase',

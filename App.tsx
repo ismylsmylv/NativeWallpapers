@@ -13,6 +13,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Appearance,
   BackHandler,
   DrawerLayoutAndroid,
   SafeAreaView,
@@ -30,6 +31,7 @@ import store from './redux/store';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import Drawer from './components/Drawer';
 import {setDrawer} from './redux/slice';
+const colorScheme = Appearance.getColorScheme();
 
 function App(): React.JSX.Element {
   const drawer = useRef<DrawerLayoutAndroid>(null);
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   main: {
-    backgroundColor: 'white',
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
     overflow: 'scroll',
     flex: 1,
     position: 'relative',

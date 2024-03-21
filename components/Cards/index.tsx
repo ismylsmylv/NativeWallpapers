@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect} from 'react';
 import {
+  Appearance,
   Dimensions,
   FlatList,
   Image,
@@ -18,7 +19,7 @@ import {
   setItem,
   setopenCategory,
 } from '../../redux/slice';
-
+const colorScheme = Appearance.getColorScheme();
 const ImageItem = ({img, item}: any) => {
   console.log(item, 'as item image');
 
@@ -30,6 +31,7 @@ const ImageItem = ({img, item}: any) => {
   );
 };
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
@@ -60,12 +62,19 @@ export default function Cards({datas, navigation, placeholder}: any) {
           data={datas}
           numColumns={2}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={['#FA2F4D']}
+              progressBackgroundColor={
+                colorScheme === 'dark' ? '#2B2B2B' : '#ffffff'
+              }
+            />
           }
           renderItem={({item}) => {
             return (
               <TouchableHighlight
-                underlayColor="white"
+                underlayColor="transparent"
                 onPress={() => {
                   console.log(item.name + ' pressed');
                   navigation.navigate('detail');
@@ -124,6 +133,7 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     width: windowWidth,
     paddingBottom: 90,
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
   },
   contentContainer: {},
   placeholder: {
@@ -131,12 +141,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 40,
     marginTop: -60,
-    height: 100,
-    width: 300,
+    width: windowWidth,
     zIndex: 0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colorScheme === 'dark' ? '#2B2B2B' : 'white',
   },
   placeholderImg: {
     height: 100,

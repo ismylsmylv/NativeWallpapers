@@ -1,4 +1,3 @@
-2. Dark/light mode
 3. Loading state on home
 4. Setting wallpaper works actually
 5. Setting asks which wallpaper to change

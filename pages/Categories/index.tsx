@@ -49,14 +49,14 @@ const categories = [
       'https://images.pexels.com/photos/247929/pexels-photo-247929.jpeg?cs=srgb&dl=pexels-pixabay-247929.jpg&fm=jpg',
   },
   {
-    title: 'Gaming',
+    title: 'Tech',
     image:
       'https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
   },
-  {
-    title: 'Sci-Fi/Fantasy',
-    image: 'https://getwallpapers.com/wallpaper/full/5/8/a/533703.jpg',
-  },
+  // {
+  //   title: 'Sci-Fi/Fantasy',
+  //   image: 'https://getwallpapers.com/wallpaper/full/5/8/a/533703.jpg',
+  // },
 ];
 
 function CategoryScreen() {

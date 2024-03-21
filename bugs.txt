@@ -2,3 +2,6 @@
 3. Loading state on home
 4. Setting wallpaper works actually
 5. Setting asks which wallpaper to change
+6. randomize home walls not same category
+7. Add loading to category page
+8. search upscaling

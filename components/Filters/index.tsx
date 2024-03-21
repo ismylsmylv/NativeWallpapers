@@ -67,7 +67,6 @@ export default function Filters() {
 const styles = StyleSheet.create({
   category: {
     textTransform: 'uppercase',
-    fontWeight: '800',
     color: '#C7C7CE',
     width: '100%',
     fontFamily: 'Poppins-Medium',

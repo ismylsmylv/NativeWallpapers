@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     color: 'gray',
-    fontWeight: '600',
+    // fontWeight: '600',
     marginTop: 15,
+    fontFamily: 'Poppins-Regular',
   },
 });

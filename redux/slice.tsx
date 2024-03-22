@@ -156,8 +156,16 @@ export const counterSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchWalls.fulfilled, (state, action) => {
-      state.wallpapers = action.payload;
-      state.wallpapersBack = action.payload;
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+      const wallpapersRandom = [...action.payload];
+      shuffleArray(wallpapersRandom);
+      state.wallpapers = wallpapersRandom;
+      state.wallpapersBack = wallpapersRandom;
     });
     builder.addCase(fetchWishlist.fulfilled, (state, action) => {
       state.wishlist = action.payload;

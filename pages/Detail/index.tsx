@@ -9,6 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Appearance,
   BackHandler,
   Dimensions,
@@ -27,6 +28,8 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
+import {TYPE_SCREEN} from 'rn-wallpapers';
+import WallpaperManager from 'react-native-wallpaper-manager';
 const colorScheme = Appearance.getColorScheme();
 const windowWidth = Dimensions.get('window').width;
 // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
@@ -149,6 +152,7 @@ export default function Detail() {
       console.error('Error setting wallpaper: ', error);
     }
   };
+
   //added
   const imageUri = item.img;
   return (
@@ -197,8 +201,9 @@ export default function Detail() {
                   ? [styles.controlSet, {backgroundColor: '#FA2F4D'}]
                   : [styles.controlSet, {backgroundColor: '#ffffff'}]
               }
-              onPress={() => {
+              onPress={async () => {
                 setWallpaper();
+
                 setfakeLoading(true);
                 setTimeout(() => {
                   setfakeLoading(false);

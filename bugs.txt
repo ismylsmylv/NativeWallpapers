@@ -1,4 +1,3 @@
 3. Loading state on home
 4. Setting wallpaper works actually
 5. Setting asks which wallpaper to change
-7. Add loading to category page

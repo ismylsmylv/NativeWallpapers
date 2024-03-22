@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Appearance,
   Image,
@@ -69,6 +69,7 @@ function CategoryScreen() {
   }, []);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   return (
     <SafeAreaView>
       <ScrollView style={[styles.container, {marginBottom: 80}]}>

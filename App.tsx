@@ -95,7 +95,11 @@ function App(): React.JSX.Element {
           drawerPosition={'left'}
           renderNavigationView={navigationView}> */}
         <SafeAreaView style={styles.main}>
-          <StatusBar backgroundColor={'white'} hidden={true} />
+          <StatusBar
+            backgroundColor={colorScheme === 'dark' ? '#2B2B2B' : 'white'}
+            hidden={false}
+            barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+          />
           <Header drawerCurrent={drawer.current} />
           <Appnavigator />
         </SafeAreaView>

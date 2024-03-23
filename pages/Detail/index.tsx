@@ -9,7 +9,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
-  Alert,
   Appearance,
   BackHandler,
   Dimensions,
@@ -28,8 +27,6 @@ import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import ManageWallpaper, {TYPE} from 'react-native-manage-wallpaper';
 import RNFetchBlob from 'rn-fetch-blob';
-import {TYPE_SCREEN} from 'rn-wallpapers';
-import WallpaperManager from 'react-native-wallpaper-manager';
 const colorScheme = Appearance.getColorScheme();
 const windowWidth = Dimensions.get('window').width;
 // await RNFetchBlob.fs.mkdir(folderPath, {recursive: true});
@@ -131,25 +128,49 @@ export default function Detail() {
     console.log('Response: ', res);
   };
 
-  const setWallpaper = async () => {
+  const setWallpaper = () => {
     try {
-      await ManageWallpaper.setWallpaper(image, callback, TYPE.HOME);
-      const updatedRating = item.rating + 1;
-      const obj = {
-        name: item.name,
-        img: item.img,
-        view: item.view,
-        like: item.like,
-        rating: updatedRating,
-        category: item.category,
-      };
-      axios.put(
-        'https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers/' + item.id,
-        obj,
+      // Set loading to true to indicate that wallpaper is being set
+      setfakeLoading(true);
+
+      ManageWallpaper.setWallpaper(
+        image,
+        error => {
+          if (error) {
+            console.error('Error setting wallpaper: ', error);
+            setfakeLoading(false); // Reset loading state if there's an error
+          } else {
+            // Wallpaper set successfully
+            const updatedRating = item.rating + 1;
+            const obj = {
+              name: item.name,
+              img: item.img,
+              view: item.view,
+              like: item.like,
+              rating: updatedRating,
+              category: item.category,
+            };
+            axios
+              .put(
+                'https://6565f015eb8bb4b70ef29ee3.mockapi.io/wallpapers/' +
+                  item.id,
+                obj,
+              )
+              .then(() => {
+                console.log('Wallpaper set successfully');
+                setfakeLoading(false);
+              })
+              .catch(error => {
+                console.error('Error updating wallpaper rating: ', error);
+                setfakeLoading(false);
+              });
+          }
+        },
+        TYPE.HOME,
       );
-      console.log('Wallpaper set successfully');
     } catch (error) {
       console.error('Error setting wallpaper: ', error);
+      setfakeLoading(false);
     }
   };
 
@@ -204,11 +225,9 @@ export default function Detail() {
               onPress={async () => {
                 setWallpaper();
 
-                setfakeLoading(true);
-                setTimeout(() => {
-                  setfakeLoading(false);
-                  setwallpaperSet(true);
-                }, 1000);
+                // setTimeout(() => {
+                // setwallpaperSet(true);
+                // }, 1000);
               }}>
               <Text
                 style={

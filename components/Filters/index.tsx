@@ -6,6 +6,7 @@ import {
   filterForYou,
   filterPopular,
   filterTrending,
+  setLoading,
   setactiveFilter,
 } from '../../redux/slice';
 
@@ -17,9 +18,11 @@ export default function Filters() {
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        activeOpacity={1}
         onPress={() => {
-          dispatch(filterForYou());
+          // dispatch(setLoading(true));
           dispatch(setactiveFilter('for you'));
+          dispatch(filterForYou());
         }}>
         <Text
           style={
@@ -32,9 +35,10 @@ export default function Filters() {
         {/* all */}
       </TouchableOpacity>
       <TouchableOpacity
+        activeOpacity={1}
         onPress={() => {
-          dispatch(filterPopular());
           dispatch(setactiveFilter('popular'));
+          dispatch(filterPopular());
         }}>
         <Text
           style={
@@ -47,9 +51,10 @@ export default function Filters() {
         {/* most wished */}
       </TouchableOpacity>
       <TouchableOpacity
+        activeOpacity={1}
         onPress={() => {
-          dispatch(filterTrending());
           dispatch(setactiveFilter('trending'));
+          dispatch(filterTrending());
         }}>
         <Text
           style={

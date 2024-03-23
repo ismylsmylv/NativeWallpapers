@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Appearance,
   Dimensions,
@@ -17,6 +17,7 @@ import {
   fetchWalls,
   setDetailOpen,
   setItem,
+  setLoading,
   setopenCategory,
 } from '../../redux/slice';
 const colorScheme = Appearance.getColorScheme();
@@ -31,16 +32,17 @@ const ImageItem = ({img}: any) => {
   );
 };
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export default function Cards({datas, navigation, placeholder}: any) {
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
     (state: any) => state.counter.selectedCategory,
   );
-
+  const loading = useSelector(state => state.counter.loading);
   useEffect(() => {
     dispatch(setopenCategory(selectedCategory));
     // console.log(datas, 'from cards');
-  }, []);
+  }, [datas]);
 
   // console.log(datas);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -52,9 +54,13 @@ export default function Cards({datas, navigation, placeholder}: any) {
       setRefreshing(false);
     }, 1000);
   }, []);
+  // const [loading, setloading] = useState(true);
 
   return (
     <>
+      {/* <View style={styles.loading}>
+        <Text style={styles.loadingText}>loading...</Text>
+      </View> */}
       {datas.length > 0 ? (
         <FlatList
           contentContainerStyle={styles.flatContainer}
@@ -152,6 +158,21 @@ const styles = StyleSheet.create({
     width: 100,
   },
   placeholderText: {
+    color: 'gray',
+    // fontWeight: '600',
+    marginTop: 15,
+    fontFamily: 'Poppins-Regular',
+  },
+  loading: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: colorScheme === 'dark' ? '#2b2b2b' : 'white',
+    justifyContent: 'center',
+    width: windowWidth,
+    height: windowHeight,
+  },
+  loadingText: {
     color: 'gray',
     // fontWeight: '600',
     marginTop: 15,

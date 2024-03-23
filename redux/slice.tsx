@@ -41,6 +41,7 @@ interface CounterState {
   selectedCategory: string;
   openCategory: object[];
   local: object[];
+  loading: boolean;
 }
 
 const initialState: CounterState = {
@@ -55,6 +56,7 @@ const initialState: CounterState = {
   selectedCategory: '',
   openCategory: [],
   local: [],
+  loading: false,
 };
 
 export const fetchWalls = createAsyncThunk('users/fetchWalls', async () => {
@@ -143,6 +145,11 @@ export const counterSlice = createSlice({
         elem.category.includes(state.selectedCategory),
       );
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      setTimeout(() => {
+        state.loading = true;
+      }, 1000);
+    },
     // getLocal: state => {
     //   // let newData = [];
     //   async function readLocal() {
@@ -185,6 +192,7 @@ export const {
   setactiveFilter,
   setselectedCategory,
   setopenCategory,
+  setLoading,
   // getLocal,
 } = counterSlice.actions;
 
